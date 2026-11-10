@@ -1,0 +1,44 @@
+$ cd packages/web && bunx vite
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:10:27). Use `import.meta.dirname` instead
+  - import "./vite/__plugins/runable-analytics-plugin" without a file extension (vite.config.ts:5:36). Add the file extension
+  - import "./vite/__plugins/hono-dev-plugin" without a file extension (vite.config.ts:6:27). Add the file extension
+  - import "./vite/__plugins/asset-optimizer-plugin" without a file extension (vite.config.ts:7:34). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:5065) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+  VITE v8.3.6  ready in 874 ms
+
+  ➜  Local:   http://localhost:4200/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+(node:5065) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+node:events:505
+    throw er; // Unhandled 'error' event
+    ^
+
+Error: read ECONNRESET
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:221:20)
+Emitted 'error' event on Client instance at:
+    at Client._handleErrorEvent (/home/user/dvys-runable/node_modules/.bun/pg@8.23.1/node_modules/pg/lib/client.js:422:10)
+    at Connection.emit (node:events:514:20)
+    at TLSSocket.reportStreamError (/home/user/dvys-runable/node_modules/.bun/pg@8.23.1/node_modules/pg/lib/connection.js:59:12)
+    at TLSSocket.emit (node:events:514:20)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -104,
+  code: 'ECONNRESET',
+  syscall: 'read'
+}
+
+Node.js v26.13.0
+error: script "dev" exited with code 1

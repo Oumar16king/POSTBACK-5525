@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>DVYS · 1win Prediction</title>
+<link rel="icon" href="/identite_visuel.jpg">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{touch-action:pan-x pan-y!important;overscroll-behavior:none}
+
+:root{
+  --dvys-bg-primary:#000a14;
+  --dvys-bg-secondary:#001020;
+  --dvys-accent:#00c8ff;
+  --dvys-accent-dark:#0099cc;
+  --dvys-accent-light:#66e0ff;
+  --dvys-glass:rgba(0,200,255,0.08);
+  --dvys-glass-border:rgba(0,200,255,0.12);
+  --dvys-text:#ffffff;
+  --dvys-text-muted:#5a7a8f;
+  --dvys-green:#00e676;
+  --dvys-red:#ff5252;
+  --dvys-orange:#ff9500;
+}
+
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--dvys-bg-primary);
+  color:var(--dvys-text);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* Animated BG */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 10%,rgba(0,200,255,0.06) 0%,transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 90%,rgba(0,200,255,0.04) 0%,transparent 70%),
+    radial-gradient(ellipse 300px 300px at 50% 50%,rgba(0,200,255,0.02) 0%,transparent 70%);
+  animation:dvys-bgDrift 25s ease-in-out infinite alternate;
+  pointer-events:none;z-index:0;
+}
+@keyframes dvys-bgDrift{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(20px,-15px) scale(1.05)}
+}
+
+/* Floating coins */
+.coin-particle{
+  position:fixed;
+  font-size:16px;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  animation:coinFloat linear infinite;
+}
+@keyframes coinFloat{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+  10%{opacity:0.35}
+  90%{opacity:0.35}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0}
+}
+
+/* HEADER */
+.dvys-header{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  background:rgba(0,10,20,0.8);
+  border-bottom:1px solid rgba(0,200,255,0.08);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  animation:dvys-slideDown 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes dvys-slideDown{
+  from{opacity:0;transform:translateY(-100%)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.dvys-header-left{display:flex;align-items:center;gap:12px}
+.dvys-logo-img{width:36px;height:36px;border-radius:10px;object-fit:cover;border:2px solid rgba(0,200,255,0.25);}
+.dvys-header-brand{display:flex;flex-direction:column}
+.dvys-brand-name{
+  font-size:1.15rem;font-weight:900;
+  background:linear-gradient(135deg,var(--dvys-accent-light),var(--dvys-accent),var(--dvys-accent-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:1px;line-height:1.2;
+}
+.dvys-brand-sub{font-size:0.6rem;color:var(--dvys-text-muted);font-weight:600;letter-spacing:2px;text-transform:uppercase}
+
+.dvys-header-right{display:flex;align-items:center;gap:12px}
+.dvys-info-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.15);
+  color:var(--dvys-accent);font-size:16px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s;
+}
+.dvys-info-btn:hover{background:rgba(0,200,255,0.15);border-color:rgba(0,200,255,0.3)}
+
+/* HERO */
+.dvys-hero{
+  text-align:center;
+  padding:40px 20px 30px;
+  position:relative;z-index:1;
+  animation:dvys-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+}
+.dvys-hero h1{
+  font-size:1.8rem;font-weight:900;
+  background:linear-gradient(135deg,var(--dvys-accent-light),var(--dvys-accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:6px;letter-spacing:0.5px;
+}
+.dvys-hero p{font-size:0.85rem;color:var(--dvys-text-muted);font-weight:500}
+
+/* LOADING */
+.dvys-loading{
+  position:relative;z-index:1;
+  text-align:center;
+  padding:60px 20px;
+}
+.dvys-loading-spinner{
+  width:40px;height:40px;
+  border:3px solid rgba(0,200,255,0.15);
+  border-top-color:var(--dvys-accent);
+  border-radius:50%;
+  animation:spin 0.8s linear infinite;
+  margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* GAME GRID */
+.dvys-grid{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  padding:0 16px 100px;
+  max-width:500px;
+  margin:0 auto;
+}
+
+@keyframes dvys-fadeInUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.dvys-card{
+  display:block;
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(0,200,255,0.06),rgba(0,20,40,0.8));
+  border:1px solid rgba(0,200,255,0.1);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  text-decoration:none;
+  color:#fff;
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  animation:dvys-fadeInUp 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  position:relative;
+  cursor:pointer;
+}
+.dvys-card:active{transform:scale(0.96)}
+.dvys-card:hover{
+  transform:translateY(-4px) scale(1.02);
+  border-color:rgba(0,200,255,0.25);
+  box-shadow:0 8px 30px rgba(0,200,255,0.1),0 4px 20px rgba(0,0,0,0.3);
+}
+
+.dvys-card-img{
+  width:100%;overflow:hidden;position:relative;
+  background:#001020;
+}
+.dvys-card-img img{width:100%;height:auto;display:block;object-fit:contain;transition:transform 0.4s}
+.dvys-card:hover .dvys-card-img img{transform:scale(1.05)}
+.dvys-card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(0,10,20,0.6) 100%);
+  pointer-events:none;
+}
+
+.dvys-card-body{
+  padding:10px 12px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+.dvys-card-name{
+  font-size:0.8rem;font-weight:700;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,0.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.dvys-card-badge{
+  font-size:0.6rem;font-weight:700;
+  padding:4px 10px;border-radius:20px;
+  background:linear-gradient(135deg,var(--dvys-accent-dark),var(--dvys-accent));
+  color:var(--dvys-bg-primary);
+  letter-spacing:0.5px;
+}
+
+/* LOCKED GAME - image still very visible, just slightly dimmed */
+.dvys-card.locked .dvys-card-img img{
+  filter:brightness(0.65);
+}
+.dvys-card.locked .dvys-card-overlay{
+  background:rgba(0,10,20,0.25);
+}
+.dvys-card.locked .dvys-card-badge{
+  background:linear-gradient(135deg,#555,#777);
+  color:#ccc;
+}
+
+/* Lock icon overlay - WHITE lock, NO orange, NO animation */
+.dvys-lock-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  gap:6px;
+  pointer-events:none;
+}
+.dvys-lock-icon{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.5);
+  border:2px solid rgba(255,255,255,0.25);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.dvys-lock-icon svg{width:22px;height:22px;stroke:#ffffff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dvys-lock-text{
+  font-size:0.65rem;font-weight:700;
+  color:rgba(255,255,255,0.9);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  text-shadow:0 1px 4px rgba(0,0,0,0.8);
+}
+
+/* FOOTER */
+.dvys-footer{
+  text-align:center;
+  padding:24px 20px 40px;
+  font-size:0.65rem;
+  color:rgba(255,255,255,0.15);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  position:relative;z-index:1;
+}
+
+/* INFO MODAL */
+.dvys-modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  z-index:200;justify-content:center;align-items:center;
+}
+.dvys-modal-overlay.show{display:flex}
+.dvys-modal{
+  background:linear-gradient(145deg,#001020,#000a14);
+  border:1px solid rgba(0,200,255,0.15);
+  border-radius:24px;padding:28px 24px;
+  max-width:380px;width:92%;
+  animation:dvys-modalPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(0,200,255,0.05);
+  max-height:90vh;overflow-y:auto;
+}
+@keyframes dvys-modalPop{
+  from{transform:scale(0.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.dvys-modal h2{
+  font-size:1.1rem;font-weight:800;
+  color:var(--dvys-accent);
+  margin-bottom:16px;
+  text-align:center;
+}
+.dvys-modal p{font-size:0.82rem;color:var(--dvys-text-muted);line-height:1.6;margin-bottom:16px}
+.dvys-modal-close{
+  width:100%;padding:14px;
+  border:1px solid rgba(0,200,255,0.2);
+  border-radius:14px;
+  background:rgba(0,200,255,0.08);
+  color:var(--dvys-accent);
+  font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:600;
+  cursor:pointer;transition:all 0.3s;
+}
+.dvys-modal-close:hover{background:rgba(0,200,255,0.15)}
+
+/* INFO MENU BUTTONS */
+.dvys-info-menu{
+  display:flex;flex-direction:column;gap:10px;
+  margin-bottom:16px;
+}
+.dvys-info-btn-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(0,200,255,0.05);
+  border:1px solid rgba(0,200,255,0.1);
+  cursor:pointer;
+  transition:all 0.25s;
+  text-align:left;
+}
+.dvys-info-btn-item:hover{
+  background:rgba(0,200,255,0.1);
+  border-color:rgba(0,200,255,0.2);
+}
+.dvys-info-btn-item.active{
+  background:rgba(0,200,255,0.08);
+  border-color:rgba(0,200,255,0.25);
+}
+.dvys-info-btn-icon{
+  width:40px;height:40px;min-width:40px;
+  border-radius:12px;
+  background:rgba(0,200,255,0.1);
+  border:1px solid rgba(0,200,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+}
+.dvys-info-btn-icon svg{
+  width:20px;height:20px;
+  stroke:var(--dvys-accent);
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.dvys-info-btn-label{
+  font-size:0.88rem;font-weight:700;
+  color:#fff;
+}
+.dvys-info-btn-arrow{
+  margin-left:auto;
+  width:18px;height:18px;
+  stroke:var(--dvys-text-muted);
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform 0.3s;
+}
+.dvys-info-btn-item.active .dvys-info-btn-arrow{
+  transform:rotate(90deg);
+  stroke:var(--dvys-accent);
+}
+
+/* INFO PANEL (expandable content) */
+.dvys-info-panel{
+  display:none;
+  padding:16px;
+  border-radius:14px;
+  background:rgba(0,200,255,0.03);
+  border:1px solid rgba(0,200,255,0.08);
+  margin-top:-6px;
+  margin-bottom:10px;
+  animation:dvys-panelSlide 0.3s ease both;
+}
+.dvys-info-panel.show{display:block}
+@keyframes dvys-panelSlide{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.dvys-info-panel h3{
+  font-size:0.92rem;font-weight:800;
+  color:var(--dvys-accent);
+  margin-bottom:10px;
+}
+.dvys-info-panel p{
+  font-size:0.8rem;
+  color:var(--dvys-text-muted);
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.dvys-info-panel p:last-child{margin-bottom:0}
+.dvys-info-panel p b{color:#fff;font-weight:600}
+.dvys-promo{
+  display:inline-block;
+  padding:10px 24px;
+  background:linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,200,255,0.05));
+  border:2px dashed rgba(0,200,255,0.3);
+  border-radius:14px;
+  font-size:1.3rem;font-weight:900;
+  color:var(--dvys-accent);
+  letter-spacing:4px;
+  margin-bottom:8px;
+}
+.dvys-bonus{
+  font-size:0.95rem;font-weight:800;
+  color:var(--dvys-green);
+  margin-bottom:12px;
+}
+
+/* LOCK MODAL - clean cyan theme */
+.dvys-lock-modal{
+  background:linear-gradient(145deg,#001020,#000a14);
+  border:1px solid rgba(0,200,255,0.15);
+  border-radius:24px;padding:28px 24px;
+  max-width:380px;width:92%;text-align:center;
+  animation:dvys-modalPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(0,200,255,0.05);
+  max-height:90vh;overflow-y:auto;
+}
+.dvys-lock-modal h2{
+  font-size:1.1rem;font-weight:800;
+  color:var(--dvys-accent);
+  margin-bottom:12px;
+}
+.dvys-lock-modal .game-name{
+  font-size:1.3rem;font-weight:900;
+  color:#fff;
+  margin-bottom:6px;
+}
+.dvys-lock-modal .game-subtitle{
+  font-size:0.78rem;
+  color:var(--dvys-text-muted);
+  margin-bottom:20px;
+  line-height:1.5;
+}
+
+/* Referral link box */
+.dvys-referral-box{
+  background:rgba(0,200,255,0.06);
+  border:1.5px dashed rgba(0,200,255,0.25);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.dvys-referral-link{
+  flex:1;
+  font-size:0.7rem;
+  color:var(--dvys-accent);
+  word-break:break-all;
+  font-weight:600;
+  line-height:1.4;
+}
+.dvys-copy-btn{
+  padding:8px 14px;
+  border-radius:8px;
+  border:1px solid rgba(0,200,255,0.25);
+  background:rgba(0,200,255,0.1);
+  color:var(--dvys-accent);
+  font-size:0.72rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  font-family:'Inter',sans-serif;
+}
+.dvys-copy-btn:hover{background:rgba(0,200,255,0.2)}
+.dvys-copy-btn.copied{
+  background:rgba(0,230,118,0.15);
+  border-color:rgba(0,230,118,0.3);
+  color:var(--dvys-green);
+}
+
+/* Progress */
+.dvys-task-progress{
+  height:6px;
+  background:rgba(255,255,255,0.08);
+  border-radius:3px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.dvys-task-progress-bar{
+  height:100%;
+  border-radius:3px;
+  transition:width 0.5s ease;
+}
+.dvys-task-progress-bar.ref{background:linear-gradient(90deg,var(--dvys-accent-dark),var(--dvys-accent))}
+.dvys-task-progress-bar.dep{background:linear-gradient(90deg,#1a7a1a,var(--dvys-green))}
+.dvys-task-progress-bar.done{background:linear-gradient(90deg,var(--dvys-green),#80ff80)}
+.dvys-task-detail{
+  font-size:0.82rem;
+  color:var(--dvys-text-muted);
+  font-weight:500;
+}
+.dvys-task-detail b{color:#fff}
+.dvys-task-done{color:var(--dvys-green)!important}
+
+/* CTA share text box */
+.dvys-cta-box{
+  background:rgba(0,200,255,0.06);
+  border:1.5px solid rgba(0,200,255,0.18);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-top:12px;
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+}
+.dvys-cta-text{
+  flex:1;
+  font-size:0.78rem;
+  color:var(--dvys-text-muted);
+  line-height:1.5;
+  white-space:pre-line;
+  word-break:break-word;
+  max-height:120px;
+  overflow-y:auto;
+}
+.dvys-cta-text .cta-link{
+  color:var(--dvys-accent);
+  font-weight:700;
+  word-break:break-all;
+}
+
+/* How it works info box */
+.dvys-info-box{
+  background:rgba(0,200,255,0.04);
+  border:1px solid rgba(0,200,255,0.1);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-top:16px;
+  text-align:left;
+}
+.dvys-info-box h4{
+  font-size:0.72rem;font-weight:800;
+  color:var(--dvys-accent);
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  margin-bottom:10px;
+}
+.dvys-info-box .step{
+  display:flex;align-items:flex-start;gap:8px;
+  margin-bottom:7px;
+  font-size:0.75rem;
+  color:var(--dvys-text-muted);
+  line-height:1.5;
+}
+.dvys-info-box .step:last-child{margin-bottom:0}
+.dvys-info-box .step-num{
+  width:20px;height:20px;min-width:20px;
+  border-radius:50%;
+  background:rgba(0,200,255,0.12);
+  color:var(--dvys-accent);
+  font-size:0.65rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+
+/* Close button for lock modal */
+.dvys-lock-modal-close{
+  width:100%;padding:16px;
+  border:1px solid rgba(0,200,255,0.2);
+  border-radius:14px;
+  background:rgba(0,200,255,0.08);
+  color:var(--dvys-accent);
+  font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:700;
+  cursor:pointer;transition:all 0.3s;
+  margin-top:16px;
+}
+.dvys-lock-modal-close:hover{background:rgba(0,200,255,0.15)}
+
+/* Deposit info box */
+.dvys-deposit-info{
+  padding:14px 16px;
+  border-radius:12px;
+  text-align:center;
+  margin-top:12px;
+}
+.dvys-deposit-info.remaining{
+  background:rgba(255,149,0,0.08);
+  border:1px solid rgba(255,149,0,0.2);
+}
+.dvys-deposit-info.needed{
+  background:rgba(0,200,255,0.06);
+  border:1px solid rgba(0,200,255,0.15);
+}
+
+/* FIXED BADGE */
+.dvys-fixed-badge{
+  position:fixed;bottom:16px;right:16px;
+  padding:6px 14px;border-radius:20px;
+  backdrop-filter:blur(16px);
+  background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.12);
+  font-size:0.6rem;font-weight:700;color:var(--dvys-accent);
+  letter-spacing:1.5px;z-index:100;
+  animation:dvys-badgeFloat 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes dvys-badgeFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+
+/* RTL support for Arabic */
+html[dir="rtl"] .dvys-lock-overlay{direction:rtl}
+html[dir="rtl"] .dvys-info-box{text-align:right}
+html[dir="rtl"] .dvys-info-box .step{flex-direction:row-reverse}
+
+/* RESPONSIVE */
+@media(max-width:400px){
+  .dvys-hero h1{font-size:1.5rem}
+  .dvys-grid{gap:10px;padding:0 12px 80px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Floating coins -->
+<div id="coins"></div>
+
+<!-- HEADER -->
+<div class="dvys-header">
+  <div class="dvys-header-left">
+    <img src="/identite_visuel.jpg" class="dvys-logo-img" alt="DVYS">
+    <div class="dvys-header-brand">
+      <span class="dvys-brand-name">DVYS</span>
+      <span class="dvys-brand-sub" data-i18n="header_sub">1win Prediction</span>
+    </div>
+  </div>
+  <div class="dvys-header-right">
+    <div class="dvys-info-btn" onclick="toggleModal()">i</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="dvys-hero">
+  <h1 data-i18n="hero_title">DVYS Predictions</h1>
+  <p id="heroSubtitle">...</p>
+</div>
+
+<!-- LOADING -->
+<div class="dvys-loading" id="loadingGames">
+  <div class="dvys-loading-spinner"></div>
+  <div style="font-size:0.85rem;color:var(--dvys-text-muted)" data-i18n="loading">Chargement des jeux...</div>
+</div>
+
+<!-- GAME GRID (dynamic) -->
+<div class="dvys-grid" id="gamesGrid" style="display:none"></div>
+
+<!-- FOOTER -->
+<div class="dvys-footer" data-i18n="footer">All rights reserved DVYS</div>
+
+<!-- FIXED BADGE -->
+<div class="dvys-fixed-badge">DVYS</div>
+
+<!-- INFO MODAL -->
+<div class="dvys-modal-overlay" id="infoModal" onclick="if(event.target===this)toggleModal()">
+  <div class="dvys-modal">
+    <h2 id="infoModalTitle" data-i18n="info_menu_title">Informations</h2>
+
+    <div class="dvys-info-menu">
+      <div class="dvys-info-btn-item" onclick="toggleInfoPanel('platform')">
+        <div class="dvys-info-btn-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-10"/></svg>
+        </div>
+        <span class="dvys-info-btn-label" data-i18n="info_btn_platform">Plateforme</span>
+        <svg class="dvys-info-btn-arrow" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </div>
+      <div class="dvys-info-btn-item" onclick="toggleInfoPanel('unlock')">
+        <div class="dvys-info-btn-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <span class="dvys-info-btn-label" data-i18n="info_btn_unlock">Debloquer les jeux</span>
+        <svg class="dvys-info-btn-arrow" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </div>
+      <div class="dvys-info-btn-item" onclick="toggleInfoPanel('promo')">
+        <div class="dvys-info-btn-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+        </div>
+        <span class="dvys-info-btn-label" data-i18n="info_btn_promo">Code promo</span>
+        <svg class="dvys-info-btn-arrow" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </div>
+      <div class="dvys-info-btn-item" onclick="toggleInfoPanel('stats')">
+        <div class="dvys-info-btn-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <span class="dvys-info-btn-label" data-i18n="info_btn_stats">Statistiques</span>
+        <svg class="dvys-info-btn-arrow" viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </div>
+    </div>
+
+    <div class="dvys-info-panel" id="infoPanelPlatform">
+      <h3 data-i18n="info_platform_title">La Plateforme</h3>
+      <p id="infoPlatformText">...</p>
+    </div>
+    <div class="dvys-info-panel" id="infoPanelUnlock">
+      <h3 data-i18n="info_unlock_title">Debloquer les jeux</h3>
+      <p id="infoUnlockText">...</p>
+    </div>
+    <div class="dvys-info-panel" id="infoPanelPromo">
+      <h3 data-i18n="info_promo_title">Code promo</h3>
+      <p id="infoPromoText">...</p>
+      <div class="dvys-promo">DVYS</div>
+      <div class="dvys-bonus" data-i18n="bonus_text">+500% BONUS</div>
+    </div>
+    <div class="dvys-info-panel" id="infoPanelStats">
+      <h3 data-i18n="info_stats_title">Statistiques</h3>
+      <p id="infoStatsText">...</p>
+      <div style="text-align:center;margin-top:12px">
+        <a href="/stats" id="statsLink" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,var(--dvys-accent-dark),var(--dvys-accent));color:var(--dvys-bg-primary);font-weight:700;font-size:0.88rem;border-radius:12px;text-decoration:none;letter-spacing:0.5px" data-i18n="stats_view_btn">Voir les statistiques</a>
+      </div>
+    </div>
+
+    <button class="dvys-modal-close" id="infoModalClose" onclick="toggleModal()" data-i18n="close">Fermer</button>
+  </div>
+</div>
+
+<!-- LOCK MODAL -->
+<div class="dvys-modal-overlay" id="lockModal" onclick="if(event.target===this)closeLockModal()">
+  <div class="dvys-lock-modal" id="lockModalContent"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DVYS GAMES PAGE - MULTI-LANGUAGE + REFERRAL FIX
+// ═══════════════════════════════════════════════════════
+
+// ─── i18n SYSTEM ───
+var currentLang = 'fr';
+
+var I18N = {
+  fr: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Chargement des jeux...',
+    no_games: 'Aucun jeu disponible.',
+    error_load: 'Erreur de chargement. Reessayez.',
+    hero_games: 'jeu',
+    hero_games_pl: 'jeux',
+    hero_after: 'Prediction IA en temps reel',
+    locked: 'Verrouille',
+    play: 'Jouer',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Informations',
+    info_btn_platform: 'Plateforme',
+    info_btn_unlock: 'Debloquer les jeux',
+    info_btn_promo: 'Code promo',
+    info_platform_title: 'La Plateforme',
+    info_platform_text: 'DVYS IA est une plateforme de predictions de jeux de casino en temps reel grace a des algorithmes intelligents qui analysent les donnees avant et pendant chaque partie pour vous fournir des predictions fiables et instantanees.',
+    info_unlock_title: 'Debloquer les jeux',
+    info_unlock_text: 'Certains jeux sont verrouilles et necessitent des actions specifiques pour les debloquer. Il existe deux types de conditions : le <b>parrainage</b> (inviter des personnes a rejoindre le bot) et le <b>depot</b> (cumuler un montant de depot pour acceder aux predictions).',
+    info_promo_title: 'Code promo',
+    info_promo_text: 'Utilisez le code promo <b>DVYS</b> lors de votre inscription pour beneficier d\'un acces facile aux depots et retraits, ainsi que d\'un bonus de 500% sur votre premier depot.',
+    info_btn_stats: 'Statistiques',
+    info_stats_title: 'Statistiques',
+    info_stats_text: 'Consultez les performances quotidiennes de la plateforme DVYS. Suivez l\'evolution des gains, le nombre de joueurs et les jeux les plus performants.',
+    stats_view_btn: 'Voir les statistiques',
+    close: 'Fermer',
+    // Referral modal
+    ref_title: '\uD83D\uDD12 Parrainage requis',
+    ref_done_title: '\u2705 Debloque !',
+    ref_subtitle: 'Invitez <b style="color:#fff">{n}</b> personne{pl} a rejoindre DVYS pour debloquer cette prediction.',
+    ref_done_subtitle: 'Vous avez atteint l\'objectif de parrainage. Ce jeu est desormais debloque.',
+    ref_progress: 'parrainages',
+    ref_remaining: 'Encore {n}',
+    ref_goal: '\u2713 Objectif atteint !',
+    copy: 'Copier',
+    copied: 'Copie !',
+    how_title: 'Comment ca marche ?',
+    how_text: 'Partagez votre lien pour debloquer des bonus et des jeux exclusifs. Vos parrainages sont comptes automatiquement a chaque progression.',
+    share_msg: 'Joue avec DVYS IA. Obtiens les meilleures prédictions casino 1win !\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    // Deposit modal
+    dep_title: '\uD83D\uDCB0 Depot requis',
+    dep_done_title: '\u2705 Debloque !',
+    dep_subtitle: 'Effectuez un depot de <b style="color:#fff">${n}</b> pour debloquer cette prediction.',
+    dep_done_subtitle: 'Vous avez atteint le seuil de depot. Ce jeu est desormais debloque.',
+    dep_remaining_label: 'Montant restant',
+    dep_needed_label: 'Depot a effectuer',
+    dep_for_unlock: 'Effectuez ce depot pour debloquer',
+    dep_min_text: 'Montant minimum pour debloquer ce jeu',
+    // Generic modal
+    gen_title: 'Jeu verrouille',
+    gen_text: 'Ce jeu n\'est pas encore disponible. Revenez plus tard.'
+  },
+  en: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Loading games...',
+    no_games: 'No games available.',
+    error_load: 'Loading error. Please retry.',
+    hero_games: 'game',
+    hero_games_pl: 'games',
+    hero_after: 'Real-time AI Prediction',
+    locked: 'Locked',
+    play: 'Play',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Information',
+    info_btn_platform: 'Platform',
+    info_btn_unlock: 'Unlock games',
+    info_btn_promo: 'Promo code',
+    info_platform_title: 'The Platform',
+    info_platform_text: 'DVYS AI is a real-time casino game prediction platform powered by intelligent algorithms that analyze data before and during each round to provide you with reliable and instant predictions.',
+    info_unlock_title: 'Unlock games',
+    info_unlock_text: 'Some games are locked and require specific actions to unlock. There are two types of conditions: <b>referral</b> (invite people to join the bot) and <b>deposit</b> (accumulate a deposit amount to access predictions).',
+    info_promo_title: 'Promo code',
+    info_promo_text: 'Use the promo code <b>DVYS</b> when registering to enjoy easy access to deposits and withdrawals, plus a 500% bonus on your first deposit.',
+    info_btn_stats: 'Statistics',
+    info_stats_title: 'Statistics',
+    info_stats_text: 'View DVYS daily platform performance. Track winnings evolution, player count and top performing games.',
+    stats_view_btn: 'View statistics',
+    close: 'Close',
+    ref_title: '\uD83D\uDD12 Referral required',
+    ref_done_title: '\u2705 Unlocked !',
+    ref_subtitle: 'Invite <b style="color:#fff">{n}</b> person{pl} to join DVYS to unlock this prediction.',
+    ref_done_subtitle: 'You have reached the referral target. This game is now unlocked.',
+    ref_progress: 'referrals',
+    ref_remaining: '{n} more',
+    ref_goal: '\u2713 Goal reached !',
+    copy: 'Copy',
+    copied: 'Copied !',
+    how_title: 'How does it work ?',
+    how_text: 'Share your link to unlock bonuses and exclusive games. Your referrals are counted automatically as you progress.',
+    share_msg: 'Play with DVYS AI. Get the best 1win casino predictions!\nAviator, Lucky Jet, Crash, Rocket Queen...',
+
+    dep_title: '\uD83D\uDCB0 Deposit required',
+    dep_done_title: '\u2705 Unlocked !',
+    dep_subtitle: 'Make a deposit of <b style="color:#fff">${n}</b> to unlock this prediction.',
+    dep_done_subtitle: 'You have reached the deposit threshold. This game is now unlocked.',
+    dep_remaining_label: 'Remaining amount',
+    dep_needed_label: 'Deposit to make',
+    dep_for_unlock: 'Make this deposit to unlock',
+    dep_min_text: 'Minimum amount to unlock this game',
+    gen_title: 'Game locked',
+    gen_text: 'This game is not yet available. Come back later.'
+  },
+  hi: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: '\u0917\u0947\u092E \u0932\u094B\u0921 \u0939\u094B \u0930\u0939\u0947 \u0939\u0948\u0902...',
+    no_games: '\u0915\u094B\u0908 \u0917\u0947\u092E \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964',
+    error_load: '\u0932\u094B\u0921 \u0915\u0930\u0928\u0947 \u092E\u0947\u0902 \u0924\u094D\u0930\u0941\u091F\u093F\u0964 \u092A\u0941\u0928\u0903 \u092A\u094D\u0930\u092F\u093E\u0938 \u0915\u0930\u0947\u0902\u0964',
+    hero_games: '\u0917\u0947\u092E',
+    hero_games_pl: '\u0917\u0947\u092E',
+    hero_after: '\u0930\u0940\u0932-\u091F\u093E\u0907\u092E AI \u092A\u094D\u0930\u0947\u0921\u093F\u0915\u094D\u0936\u0928',
+    locked: '\u0932\u0949\u0915\u094D\u0921',
+    play: '\u0916\u0947\u0932\u0947\u0902',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Information',
+    info_btn_platform: 'Platform',
+    info_btn_unlock: 'Games unlock',
+    info_btn_promo: 'Promo code',
+    info_platform_title: 'Platform',
+    info_platform_text: 'DVYS AI is a real-time casino game prediction platform powered by intelligent algorithms that analyze data before and during each round to provide reliable and instant predictions.',
+    info_unlock_title: 'Games unlock',
+    info_unlock_text: 'Some games are locked and require specific actions to unlock. There are two types of conditions: <b>referral</b> (invite people to join the bot) and <b>deposit</b> (accumulate a deposit amount to access predictions).',
+    info_promo_title: 'Promo code',
+    info_promo_text: 'Use the promo code <b>DVYS</b> when registering to enjoy easy access to deposits and withdrawals, plus a 500% bonus on your first deposit.',
+    info_btn_stats: 'Statistics',
+    info_stats_title: 'Statistics',
+    info_stats_text: 'DVYS daily platform performance dekhein. Gains evolution, player count aur top performing games track karein.',
+    stats_view_btn: 'Statistics dekhein',
+    close: '\u092C\u0902\u0926 \u0915\u0930\u0947\u0902',
+    ref_title: '\uD83D\uDD12 \u0930\u0947\u092B\u0930\u0932 \u0906\u0935\u0936\u094D\u092F\u0915',
+    ref_done_title: '\u2705 \u0905\u0928\u0932\u0949\u0915!',
+    ref_subtitle: 'DVYS \u092E\u0947\u0902 \u0936\u093E\u092E\u093F\u0932 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F <b style="color:#fff">{n}</b> \u0935\u094D\u092F\u0915\u094D\u0924\u093F\u092F\u094B\u0902 \u0915\u094B \u0906\u092E\u0902\u0924\u094D\u0930\u093F\u0924 \u0915\u0930\u0947\u0902\u0964',
+    ref_done_subtitle: '\u0906\u092A\u0928\u0947 \u0930\u0947\u092B\u0930\u0932 \u0932\u0915\u094D\u0937\u094D\u092F \u092A\u0942\u0930\u093E \u0915\u0930 \u0932\u093F\u092F\u093E \u0939\u0948\u0964 \u092F\u0939 \u0917\u0947\u092E \u0905\u092C \u0905\u0928\u0932\u0949\u0915 \u0939\u0948\u0964',
+    ref_progress: '\u0930\u0947\u092B\u0930\u0932',
+    ref_remaining: '\u0905\u092D\u0940 {n}',
+    ref_goal: '\u2713 \u0932\u0915\u094D\u0937\u094D\u092F \u092A\u0942\u0930\u093E!',
+    copy: '\u0915\u0949\u092A\u0940',
+    copied: '\u0915\u0949\u092A\u0940!',
+    how_title: '\u092F\u0939 \u0915\u0948\u0938\u0947 \u0915\u093E\u092E \u0915\u0930\u0924\u093E \u0939\u0948?',
+    how_text: '\u0905\u092A\u0928\u093E \u0932\u093F\u0902\u0915 \u0936\u0947\u092F\u0930 \u0915\u0930\u0947\u0902 \u0914\u0930 \u092C\u094B\u0928\u0938 \u0914\u0930 \u090F\u0915\u094D\u0938\u0915\u094D\u0932\u0942\u0938\u093F\u0935 \u0917\u0947\u092E \u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0947\u0902\u0964 \u0906\u092A\u0915\u0947 \u0930\u0947\u092B\u0930\u0932 \u0939\u0930 \u092A\u094D\u0930\u0917\u0924\u093F \u092A\u0930 \u0917\u093F\u0928\u0947 \u091C\u093E\u0924\u0947 \u0939\u0948\u0902\u0964',
+    share_msg: 'DVYS AI के साथ खेलो। 1win कैसीनो की सबसे अच्छी प्रेडिक्शन प्राप्त करो!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 \u091C\u092E\u093E \u0906\u0935\u0936\u094D\u092F\u0915',
+    dep_done_title: '\u2705 \u0905\u0928\u0932\u0949\u0915!',
+    dep_subtitle: '\u0907\u0938 \u092A\u094D\u0930\u0947\u0921\u093F\u0915\u094D\u0936\u0928 \u0915\u094B \u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F <b style="color:#fff">${n}</b> \u091C\u092E\u093E \u0915\u0930\u0947\u0902\u0964',
+    dep_done_subtitle: '\u0906\u092A\u0928\u0947 \u091C\u092E\u093E \u0938\u0940\u092E\u093E \u092A\u0942\u0930\u0940 \u0915\u0930 \u0932\u0940\u0964 \u092F\u0939 \u0917\u0947\u092E \u0905\u092C \u0905\u0928\u0932\u0949\u0915 \u0939\u0948\u0964',
+    dep_remaining_label: '\u0936\u0947\u0937 \u0930\u093E\u0936\u093F',
+    dep_needed_label: '\u091C\u092E\u093E \u0915\u0930\u0928\u093E \u0939\u0948',
+    dep_for_unlock: '\u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092F\u0939 \u091C\u092E\u093E \u0915\u0930\u0947\u0902',
+    dep_min_text: '\u0907\u0938 \u0917\u0947\u092E \u0915\u094B \u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0928\u0947 \u0915\u093E \u0928\u094D\u092F\u0942\u0928\u0924\u092E \u091C\u092E\u093E',
+    gen_title: '\u0917\u0947\u092E \u0932\u0949\u0915\u094D\u0921',
+    gen_text: '\u092F\u0939 \u0917\u0947\u092E \u0905\u092D\u0940 \u0909\u092A\u0932\u092C\u094D\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u092C\u093E\u0926 \u092E\u0947\u0902 \u0906\u090F\u0902\u0964'
+  },
+  uz: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'O\'yinlar yuklanmoqda...',
+    no_games: 'Hech qanday o\'yin mavjud emas.',
+    error_load: 'Yuklash xatosi. Qayta urinib ko\'ring.',
+    hero_games: 'o\'yin',
+    hero_games_pl: 'o\'yin',
+    hero_after: 'Real-time AI taxmin',
+    locked: 'Bloklangan',
+    play: 'O\'ynash',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Ma\'lumot',
+    info_btn_platform: 'Platforma',
+    info_btn_unlock: 'O\'yinlarni ochish',
+    info_btn_promo: 'Promo kod',
+    info_platform_title: 'Platforma',
+    info_platform_text: 'DVYS AI real-vaqtda kazino o\'yinlari taxmin platformasi bo\'lib, u har bir raund oldidan va davomida ma\'lumotlarni tahlil qiladigan aqlli algoritmlar yordamida ishlaydi.',
+    info_unlock_title: 'O\'yinlarni ochish',
+    info_unlock_text: 'Ba\'zi o\'yinlar bloklangan va ularni ochish uchun maxsus harakatlar talab etiladi. Ikki xil shart mavjud: <b>taklif</b> (botga odamlarni taklif qilish) va <b>to\'ldirish</b> (taxminlarga kirish uchun depozit miqdorini to\'plash).',
+    info_promo_title: 'Promo kod',
+    info_promo_text: 'Ro\'yxatdan o\'tishda <b>DVYS</b> promo kodidan foydalaning va oson depozit hamda yechish, shuningdek birinchi depozitga 500% bonus oling.',
+    info_btn_stats: 'Statistika',
+    info_stats_title: 'Statistika',
+    info_stats_text: "DVYS kunlik platformasi natijalarini ko'ring. Gains evolyutsiyasi, o'yinchi soni va eng yaxshi o'yinlarni kuzatib boring.",
+    stats_view_btn: "Statistikani ko'rish",
+    close: 'Yopish',
+    ref_title: '\uD83D\uDD12 Taklif kerak',
+    ref_done_title: '\u2705 Ochilgan!',
+    ref_subtitle: 'Bu taxminni ochish uchun DVYS\'ga <b style="color:#fff">{n}</b> kishini taklif qiling.',
+    ref_done_subtitle: 'Siz taklif maqsadiga yetdingiz. Bu o\'yin endi ochiq.',
+    ref_progress: 'taklif',
+    ref_remaining: 'Yana {n}',
+    ref_goal: '\u2713 Maqsadga erishildi!',
+    copy: 'Nusxa',
+    copied: 'Nusxalandi!',
+    how_title: 'Qanday ishlaydi?',
+    how_text: 'Bonuslar va eksklyuziv o\'yinlarni ochish uchun havolangizni ulashing. Takliflaringiz har bir progressda avtomatik hisoblanadi.',
+    share_msg: 'DVYS AI bilan o\'ynang. 1win casino eng yaxshi taxminlariga erishing!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 To\'ldirish kerak',
+    dep_done_title: '\u2705 Ochilgan!',
+    dep_subtitle: 'Bu taxminni ochish uchun <b style="color:#fff">${n}</b> to\'ldiring.',
+    dep_done_subtitle: 'Siz to\'ldirish miqdoriga yetdingiz. Bu o\'yin endi ochiq.',
+    dep_remaining_label: 'Qolgan miqdor',
+    dep_needed_label: 'To\'ldirish kerak',
+    dep_for_unlock: 'Ochish uchun shu miqdorni to\'ldiring',
+    dep_min_text: 'Bu o\'yinni ochish uchun minimal miqdor',
+    gen_title: 'O\'yin bloklangan',
+    gen_text: 'Bu o\'yin hali mavjud emas. Keyinroq qaytib keling.'
+  },
+  es: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Cargando juegos...',
+    no_games: 'Ningun juego disponible.',
+    error_load: 'Error de carga. Intente de nuevo.',
+    hero_games: 'juego',
+    hero_games_pl: 'juegos',
+    hero_after: 'Prediccion IA en tiempo real',
+    locked: 'Bloqueado',
+    play: 'Jugar',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Informacion',
+    info_btn_platform: 'Plataforma',
+    info_btn_unlock: 'Desbloquear juegos',
+    info_btn_promo: 'Codigo promo',
+    info_platform_title: 'La Plataforma',
+    info_platform_text: 'DVYS IA es una plataforma de predicciones de juegos de casino en tiempo real impulsada por algoritmos inteligentes que analizan los datos antes y durante cada ronda.',
+    info_unlock_title: 'Desbloquear juegos',
+    info_unlock_text: 'Algunos juegos estan bloqueados y requieren acciones especificas para desbloquearlos. Existen dos tipos de condiciones: el <b>referido</b> (invitar personas a unirse al bot) y el <b>deposito</b> (acumular un monto de deposito para acceder a las predicciones).',
+    info_promo_title: 'Codigo promo',
+    info_promo_text: 'Usa el codigo promo <b>DVYS</b> al registrarte para disfrutar de facil acceso a depositos y retiros, ademas de un bono del 500% en tu primer deposito.',
+    info_btn_stats: 'Estadisticas',
+    info_stats_title: 'Estadisticas',
+    info_stats_text: 'Vea el rendimiento diario de la plataforma DVYS. Siga la evolucion de ganancias, jugadores y los juegos mas exitosos.',
+    stats_view_btn: 'Ver estadisticas',
+    close: 'Cerrar',
+    ref_title: '\uD83D\uDD12 Referido requerido',
+    ref_done_title: '\u2705 Desbloqueado!',
+    ref_subtitle: 'Invita a <b style="color:#fff">{n}</b> persona{pl} a unirse a DVYS para desbloquear esta prediccion.',
+    ref_done_subtitle: 'Has alcanzado el objetivo de referidos. Este juego esta desbloqueado.',
+    ref_progress: 'referidos',
+    ref_remaining: 'Faltan {n}',
+    ref_goal: '\u2713 Objetivo alcanzado!',
+    copy: 'Copiar',
+    copied: 'Copiado!',
+    how_title: 'Como funciona?',
+    how_text: 'Comparte tu enlace para desbloquear bonos y juegos exclusivos. Tus referidos se cuentan automaticamente con cada progreso.',
+    share_msg: 'Juega con DVYS IA. Obtén las mejores predicciones casino 1win!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 Deposito requerido',
+    dep_done_title: '\u2705 Desbloqueado!',
+    dep_subtitle: 'Realice un deposito de <b style="color:#fff">${n}</b> para desbloquear esta prediccion.',
+    dep_done_subtitle: 'Ha alcanzado el umbral de deposito. Este juego esta desbloqueado.',
+    dep_remaining_label: 'Monto restante',
+    dep_needed_label: 'Deposito a realizar',
+    dep_for_unlock: 'Realice este deposito para desbloquear',
+    dep_min_text: 'Monto minimo para desbloquear este juego',
+    gen_title: 'Juego bloqueado',
+    gen_text: 'Este juego no esta disponible aun. Vuelva mas tarde.'
+  },
+  az: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Oyunlar yuklenir...',
+    no_games: 'He\u00E7 bir oyun yoxdur.',
+    error_load: 'Yukleme xetasi. Yeniden cehd edin.',
+    hero_games: 'oyun',
+    hero_games_pl: 'oyun',
+    hero_after: 'Real-time AI proqnoz',
+    locked: 'Bloklanib',
+    play: 'Oyna',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Melumat',
+    info_btn_platform: 'Platforma',
+    info_btn_unlock: 'Oyunlari acmaq',
+    info_btn_promo: 'Promo kod',
+    info_platform_title: 'Platforma',
+    info_platform_text: 'DVYS IA real-zamanda kazino oyun proqnoz platformasidir. Aqlli alqoritmlar her raund evvel ve zamaninda melumatlari tehlil edir ve etibarli, aniq proqnozlar verir.',
+    info_unlock_title: 'Oyunlari acmaq',
+    info_unlock_text: 'Bezi oyunlar bloklanib ve onlari acmaq ucun xusuusi hereketler teleb olunur. Iki nov sait var: <b>referal</b> (bota insanlari devet etmek) ve <b>doldurma</b> (proqnozlara catmaq ucun depozit mebleqini toplash).',
+    info_promo_title: 'Promo kod',
+    info_promo_text: 'Qeydiyyatdan kecerken <b>DVYS</b> promo kodundan istifade edin. Asan depozit ve cixaris eliyin, elce de ilk depozite 500% bonus qazanin.',
+    info_btn_stats: 'Statistika',
+    info_stats_title: 'Statistika',
+    info_stats_text: "DVYS gunluk platforma neticelerini gorun. Gains evolyutsiyasi, oyun\u00E7u sayi ve en yax\u0131 oyunlar\u0131 izleyin.",
+    stats_view_btn: 'Statistikaya bax',
+    close: 'Bagla',
+    ref_title: '\uD83D\uDD12 Referal lazimdir',
+    ref_done_title: '\u2705 A\u00E7ildi!',
+    ref_subtitle: 'Bu proqnozu acmaq ucun DVYS-a <b style="color:#fff">{n}</b> insan d\u0259v\u0259t edin.',
+    ref_done_subtitle: 'Referal h\u0259d\u0259fin\u0259 catd\u0131n\u0131z. Bu oyun indi aciqdir.',
+    ref_progress: 'referal',
+    ref_remaining: 'Yana {n}',
+    ref_goal: '\u2713 H\u0259d\u0259f \u0259ld\u0259 edildi!',
+    copy: 'Kopyala',
+    copied: 'Kopyaland\u0131!',
+    how_title: 'Nec\u0259 isleyir?',
+    how_text: 'Bonuslar v\u0259 ekskluziv oyunlar\u0131 a\u00E7maq \u00FC\u00E7\u00FCn linkinizi payla\u015F\u0131n. Referallar\u0131n\u0131z h\u0259r bir ir\u0259lil\u0259yi\u015Fd\u0259 avtomatik say\u0131l\u0131r.',
+    share_msg: 'DVYS IA ilə oynayın. 1win casino ən yaxşı proqnozlarına çatın!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 Doldurma lazimdir',
+    dep_done_title: '\u2705 A\u00E7\u0131ld\u0131!',
+    dep_subtitle: 'Bu proqnozu acmaq ucun <b style="color:#fff">${n}</b> daxil edin.',
+    dep_done_subtitle: 'Doldurma miqdar\u0131na catd\u0131n\u0131z. Bu oyun indi ac\u0131qdir.',
+    dep_remaining_label: 'Qalan mebleq',
+    dep_needed_label: 'Daxil etm\u0259k laz\u0131mdir',
+    dep_for_unlock: 'Acmaq ucun bu mebleqi daxil edin',
+    dep_min_text: 'Bu oyunu acmaq ucun minimal mebleq',
+    gen_title: 'Oyun bloklanib',
+    gen_text: 'Bu oyun h\u0259l\u0259 movcud deyil. Sonra qayidin.'
+  },
+  tr: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Oyunlar yukleniyor...',
+    no_games: 'Hic oyun mevcut degil.',
+    error_load: 'Yukleme hatasi. Tekrar deneyin.',
+    hero_games: 'oyun',
+    hero_games_pl: 'oyun',
+    hero_after: 'Gercek zamanli AI tahmin',
+    locked: 'Kilitli',
+    play: 'Oyna',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Bilgi',
+    info_btn_platform: 'Platform',
+    info_btn_unlock: 'Oyunlari ac',
+    info_btn_promo: 'Promo kodu',
+    info_platform_title: 'Platform',
+    info_platform_text: 'DVYS AI, her tur oncesinde ve sirasinda verileri analiz eden akilli algoritmalar tarafindan desteklenen gercek zamanli kumarhane oyun tahmin platformasidir.',
+    info_unlock_title: 'Oyunlari ac',
+    info_unlock_text: 'Bazi oyunlar kilitlidir ve acmak icin ozel islemler gerektirir. Iki tur kosul vardir: <b>referans</b> (bota kisi davet etmek) ve <b>yatirim</b> (tahminlere erismek icin yatirim tutari biriktirmek).',
+    info_promo_title: 'Promo kodu',
+    info_promo_text: 'Kayit olurken <b>DVYS</b> promo kodunu kullanin. Kolay para yatirma ve cekme yapin, ayrica ilk yatirima 500% bonus kazanin.',
+    info_btn_stats: 'Istatistikler',
+    info_stats_title: 'Istatistikler',
+    info_stats_text: "DVYS gunluk platform performansini gorun. Kazanc evrimi, oyuncu sayisi ve en basarili oyunlari takip edin.",
+    stats_view_btn: 'Istatistikleri gor',
+    close: 'Kapat',
+    ref_title: '\uD83D\uDD12 Referans gerekli',
+    ref_done_title: '\u2705 Acik!',
+    ref_subtitle: 'Bu tahmini acmak icin DVYS\'e <b style="color:#fff">{n}</b> kisi davet edin.',
+    ref_done_subtitle: 'Referans hedefinize ulastiniz. Bu oyun artik acik.',
+    ref_progress: 'referans',
+    ref_remaining: '{n} daha',
+    ref_goal: '\u2713 Hedef ulasildi!',
+    copy: 'Kopyala',
+    copied: 'Kopyalandi!',
+    how_title: 'Nasil calisir?',
+    how_text: 'Bonuslar ve ozel oyunlarin kilidini acmak icin linkinizi paylasin. Referanslariniz her ilerlemede otomatik olarak sayilir.',
+    share_msg: 'DVYS AI ile oyna. 1win casino en iyi tahminlerine eris!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 Yatirim gerekli',
+    dep_done_title: '\u2705 Acik!',
+    dep_subtitle: 'Bu tahmini acmak icin <b style="color:#fff">${n}</b> yatirin.',
+    dep_done_subtitle: 'Yatirim esigine ulastiniz. Bu oyun artik acik.',
+    dep_remaining_label: 'Kalan tutar',
+    dep_needed_label: 'Yatirilmasi gereken',
+    dep_for_unlock: 'Acmak icin bu tutari yatirin',
+    dep_min_text: 'Bu oyunu acmak icin minimum tutar',
+    gen_title: 'Oyun kilitli',
+    gen_text: 'Bu oyun henuz mevcut degil. Daha sonra tekrar gelin.'
+  },
+  ar: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: '\u062C\u0627\u0631\u064D \u062A\u062D\u0645\u064A\u0644 \u0627\u0644\u0623\u0644\u0639\u0627\u0628...',
+    no_games: '\u0644\u0627 \u062A\u0648\u062C\u062F \u0623\u0644\u0639\u0627\u0628 \u0645\u062A\u0627\u062D\u0629.',
+    error_load: '\u062E\u0637\u0623 \u0641\u064A \u0627\u0644\u062A\u062D\u0645\u064A\u0644. \u062D\u0627\u0648\u0644 \u0645\u0631\u0629 \u0623\u062E\u0631\u0649.',
+    hero_games: '\u0644\u0639\u0628\u0629',
+    hero_games_pl: '\u0644\u0639\u0628\u0629',
+    hero_after: '\u062A\u0648\u0642\u0639\u0627\u062A AI \u0641\u064A \u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0641\u0639\u0644\u064A',
+    locked: '\u0645\u0642\u0641\u0644',
+    play: '\u0627\u0644\u0639\u0628',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: '\u0645\u0639\u0644\u0648\u0645\u0627\u062A',
+    info_btn_platform: '\u0627\u0644\u0645\u0646\u0635\u0629',
+    info_btn_unlock: '\u0641\u062A\u062D \u0627\u0644\u0623\u0644\u0639\u0627\u0628',
+    info_btn_promo: '\u0631\u0645\u0632 \u0627\u0644\u062A\u0631\u0648\u064A\u062C\u0629',
+    info_platform_title: '\u0627\u0644\u0645\u0646\u0635\u0629',
+    info_platform_text: 'DVYS AI \u0647\u064A \u0645\u0646\u0635\u0629 \u062A\u0648\u0642\u0639\u0627\u062A \u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0643\u0627\u0632\u064A\u0646\u0648 \u0641\u064A \u0627\u0644\u0648\u0642\u062A \u0627\u0644\u0641\u0639\u0644\u064A. \u062A\u0639\u0645\u0644 \u0628\u062E\u0648\u0627\u0631\u0632\u0645\u064A\u0627\u062A \u0630\u0643\u064A\u0629 \u062A\u062D\u0644\u0644 \u0627\u0644\u0628\u064A\u0627\u0646\u0627\u062A \u0642\u0628\u0644 \u0648\u0623\u062B\u0646\u0627\u0621 \u0643\u0644 \u062C\u0648\u0644\u0629.',
+    info_unlock_title: '\u0641\u062A\u062D \u0627\u0644\u0623\u0644\u0639\u0627\u0628',
+    info_unlock_text: '\u0628\u0639\u0636 \u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0645\u0642\u0641\u0644\u0629 \u0648\u062A\u062A\u0637\u0644\u0628 \u0625\u062C\u0631\u0627\u0621\u0627\u062A \u0645\u0639\u064A\u0646\u0629 \u0644\u0641\u062A\u062D\u0647\u0627. \u0647\u0646\u0627\u0643 \u0646\u0648\u0639\u0627\u0646: <b>\u0627\u0644\u0625\u062D\u0627\u0644\u0629</b> (\u062F\u0639\u0648\u0629 \u0623\u0634\u062E\u0627\u0635 \u0644\u0644\u0627\u0646\u0636\u0645\u0627\u0645) \u0648 <b>\u0627\u0644\u0625\u064A\u062F\u0627\u0639</b> (\u062A\u0631\u0627\u0643\u0645 \u0645\u0628\u0644\u063A \u0644\u0644\u0648\u0635\u0648\u0644 \u0644\u0644\u062A\u0648\u0642\u0639\u0627\u062A).',
+    info_promo_title: '\u0631\u0645\u0632 \u0627\u0644\u062A\u0631\u0648\u064A\u062C\u0629',
+    info_promo_text: '\u0627\u0633\u062A\u062E\u062F\u0645 \u0631\u0645\u0632 \u0627\u0644\u062A\u0631\u0648\u064A\u062C\u0629 <b>DVYS</b> \u0639\u0646\u062F \u0627\u0644\u062A\u0633\u062C\u064A\u0644 \u0644\u0644\u0627\u0633\u062A\u0641\u0627\u062F\u0629 \u0645\u0646 \u0633\u0647\u0648\u0644\u0629 \u0627\u0644\u0625\u064A\u062F\u0627\u0639 \u0648\u0627\u0644\u0633\u062D\u0628\u060C \u0648\u0645\u0643\u0627\u0641\u0623\u0629 500% \u0639\u0644\u0649 \u0623\u0648\u0644 \u0625\u064A\u062F\u0627\u0639.',
+    info_btn_stats: "\u0627\u0644\u0625\u062D\u0635\u0627\u0626\u064A\u0627\u062A",
+    info_stats_title: "\u0627\u0644\u0625\u062D\u0635\u0627\u0626\u064A\u0627\u062A",
+    info_stats_text: "\u0639\u0631\u0636 \u0623\u062F\u0627\u0621 \u0645\u0646\u0635\u0629 DVYS \u0627\u0644\u064A\u0648\u0645\u064A. \u062A\u062A\u0628\u0639 \u062A\u0637\u0648\u0631 \u0627\u0644\u0623\u0631\u0628\u0627\u062D \u0648\u0639\u062F\u062F \u0627\u0644\u0644\u0627\u0639\u0628\u064A\u0646 \u0648\u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0623\u0643\u062B\u0631 \u0623\u062F\u0627\u0621\u064B.",
+    stats_view_btn: "\u0639\u0631\u0636 \u0627\u0644\u0625\u062D\u0635\u0627\u0626\u064A\u0627\u062A",
+    close: '\u0625\u063A\u0644\u0627\u0642',
+    ref_title: '\uD83D\uDD12 \u0627\u0644\u0625\u062D\u0627\u0644\u0629 \u0645\u0637\u0644\u0648\u0628\u0629',
+    ref_done_title: '\u2705 \u0645\u0641\u062A\u0648\u062D!',
+    ref_subtitle: '\u062F\u0639\u0652 <b style="color:#fff">{n}</b> \u0634\u062E\u0635 \u0644\u0644\u0627\u0646\u0636\u0645\u0627\u0645 \u0625\u0644\u0649 DVYS \u0644\u0641\u062A\u062D \u0647\u0630\u0627 \u0627\u0644\u062A\u0648\u0642\u0639.',
+    ref_done_subtitle: '\u0644\u0642\u062F \u062D\u0642\u0642\u062A \u0647\u062F\u0641 \u0627\u0644\u0625\u062D\u0627\u0644\u0629. \u0647\u0630\u0647 \u0627\u0644\u0644\u0639\u0628\u0629 \u0645\u0641\u062A\u0648\u062D\u0629 \u0627\u0644\u0622\u0646.',
+    ref_progress: '\u0625\u062D\u0627\u0644\u0629',
+    ref_remaining: '\u0628\u0627\u0642\u064A {n}',
+    ref_goal: '\u2713 \u062A\u0645 \u062A\u062D\u0642\u064A\u0642 \u0627\u0644\u0647\u062F\u0641!',
+    copy: '\u0646\u0633\u062E',
+    copied: '\u062A\u0645 \u0627\u0644\u0646\u0633\u062E!',
+    how_title: '\u0643\u064A\u0641 \u064A\u0639\u0645\u0644\u061F',
+    how_text: '\u0634\u0627\u0631\u0643 \u0631\u0627\u0628\u0637\u0643 \u0644\u0641\u062A\u062D \u0627\u0644\u0645\u0643\u0627\u0641\u0622\u062A \u0648\u0627\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u062D\u0635\u0631\u064A\u0629. \u064A\u062A\u0645 \u062D\u0633\u0627\u0628 \u0625\u062D\u0627\u0644\u0627\u062A\u0643 \u062A\u0644\u0642\u0627\u0626\u064A\u0627\u064B \u0645\u0639 \u0643\u0644 \u062A\u0642\u062F\u0645.',
+    share_msg: 'العب مع DVYS AI. احصل على أفضل توقعات 1win casino!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 \u0625\u064A\u062F\u0627\u0639 \u0645\u0637\u0644\u0648\u0628',
+    dep_done_title: '\u2705 \u0645\u0641\u062A\u0648\u062D!',
+    dep_subtitle: '\u0623\u0648\u062F\u0639 <b style="color:#fff">${n}</b> \u0644\u0641\u062A\u062D \u0647\u0630\u0627 \u0627\u0644\u062A\u0648\u0642\u0639.',
+    dep_done_subtitle: '\u0644\u0642\u062F \u062D\u0642\u0642\u062A \u062D\u062F \u0627\u0644\u0625\u064A\u062F\u0627\u0639. \u0647\u0630\u0647 \u0627\u0644\u0644\u0639\u0628\u0629 \u0645\u0641\u062A\u0648\u062D\u0629 \u0627\u0644\u0622\u0646.',
+    dep_remaining_label: '\u0627\u0644\u0645\u0628\u0644\u063A \u0627\u0644\u0645\u062A\u0628\u0642\u064A',
+    dep_needed_label: '\u0625\u064A\u062F\u0627\u0639 \u0644\u0644\u062A\u062D\u0648\u064A\u0644',
+    dep_for_unlock: '\u0623\u0648\u062F\u0639 \u0647\u0630\u0627 \u0627\u0644\u0645\u0628\u0644\u063A \u0644\u0644\u0641\u062A\u062D',
+    dep_min_text: '\u0627\u0644\u062D\u062F \u0627\u0644\u0623\u062F\u0646\u0649 \u0644\u0641\u062A\u062D \u0647\u0630\u0647 \u0627\u0644\u0644\u0639\u0628\u0629',
+    gen_title: '\u0627\u0644\u0644\u0639\u0628\u0629 \u0645\u0642\u0641\u0644\u0629',
+    gen_text: '\u0647\u0630\u0647 \u0627\u0644\u0644\u0639\u0628\u0629 \u063A\u064A\u0631 \u0645\u062A\u0627\u062D\u0629 \u0628\u0639\u062F. \u0639\u062F \u0644\u0627\u062D\u0642\u0627\u064B.'
+  },
+  ru: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: '\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0438\u0433\u0440...',
+    no_games: '\u041D\u0435\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445 \u0438\u0433\u0440.',
+    error_load: '\u041E\u0448\u0438\u0431\u043A\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0441\u043D\u043E\u0432\u0430.',
+    hero_games: '\u0438\u0433\u0440\u0430',
+    hero_games_pl: '\u0438\u0433\u0440',
+    hero_after: 'AI \u043F\u0440\u043E\u0433\u043D\u043E\u0437 \u0432 \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u043C \u0432\u0440\u0435\u043C\u0435\u043D\u0438',
+    locked: '\u0417\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043E',
+    play: '\u0418\u0433\u0440\u0430\u0442\u044C',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: '\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F',
+    info_btn_platform: '\u041F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430',
+    info_btn_unlock: '\u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0438\u0433\u0440\u044B',
+    info_btn_promo: '\u041F\u0440\u043E\u043C\u043E\u043A\u043E\u0434',
+    info_platform_title: '\u041F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430',
+    info_platform_text: 'DVYS AI \u2014 \u044D\u0442\u043E \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u0430 \u043F\u0440\u043E\u0433\u043D\u043E\u0437\u043E\u0432 \u043A\u0430\u0437\u0438\u043D\u043E-\u0438\u0433\u0440 \u0432 \u0440\u0435\u0430\u043B\u044C\u043D\u043E\u043C \u0432\u0440\u0435\u043C\u0435\u043D\u0438. \u0418\u043D\u0442\u0435\u043B\u043B\u0435\u043A\u0442\u0443\u0430\u043B\u044C\u043D\u044B\u0435 \u0430\u043B\u0433\u043E\u0440\u0438\u0442\u043C\u044B \u0430\u043D\u0430\u043B\u0438\u0437\u0438\u0440\u0443\u044E\u0442 \u0434\u0430\u043D\u043D\u044B\u0435 \u043F\u0435\u0440\u0435\u0434 \u0438 \u0432\u043E \u0432\u0440\u0435\u043C\u044F \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0440\u0430\u0443\u043D\u0434\u0430.',
+    info_unlock_title: '\u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0438\u0433\u0440\u044B',
+    info_unlock_text: '\u041D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0438\u0433\u0440\u044B \u0437\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u044B \u0438 \u0442\u0440\u0435\u0431\u0443\u044E\u0442 \u043E\u043F\u0440\u0435\u0434\u0435\u043B\u0451\u043D\u043D\u044B\u0445 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0439. \u0421\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442 \u0434\u0432\u0430 \u0442\u0438\u043F\u0430: <b>\u0440\u0435\u0444\u0435\u0440\u0430\u043B</b> (\u043F\u0440\u0438\u0433\u043B\u0430\u0441\u0438\u0442\u044C \u043B\u044E\u0434\u0435\u0439 \u0432 \u0431\u043E\u0442\u0430) \u0438 <b>\u0434\u0435\u043F\u043E\u0437\u0438\u0442</b> (\u043D\u0430\u043A\u043E\u043F\u0438\u0442\u044C \u0441\u0443\u043C\u043C\u0443 \u0434\u043B\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u0430 \u043A \u043F\u0440\u043E\u0433\u043D\u043E\u0437\u0430\u043C).',
+    info_promo_title: '\u041F\u0440\u043E\u043C\u043E\u043A\u043E\u0434',
+    info_promo_text: '\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u043F\u0440\u043E\u043C\u043E\u043A\u043E\u0434 <b>DVYS</b> \u043F\u0440\u0438 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438 \u0434\u043B\u044F \u0443\u0434\u043E\u0431\u043D\u043E\u0433\u043E \u043F\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u0438 \u0432\u044B\u0432\u043E\u0434\u0430, \u0430 \u0442\u0430\u043A\u0436\u0435 \u0431\u043E\u043D\u0443\u0441 500% \u043D\u0430 \u043F\u0435\u0440\u0432\u044B\u0439 \u0434\u0435\u043F\u043E\u0437\u0438\u0442.',
+    info_btn_stats: "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430",
+    info_stats_title: "\u0421\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0430",
+    info_stats_text: "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0435\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u0443\u044E \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C \u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C\u044B DVYS. \u041E\u0442\u0441\u043B\u0435\u0436\u0438\u0432\u0430\u0439\u0442\u0435 \u044D\u0432\u043E\u043B\u044E\u0446\u0438\u044E \u0432\u044B\u0438\u0433\u0440\u044B\u0448\u0435\u0439, \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0438\u0433\u0440\u043E\u043A\u043E\u0432 \u0438 \u043B\u0443\u0447\u0448\u0438\u0435 \u0438\u0433\u0440\u044B.",
+    stats_view_btn: "\u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0443",
+    close: '\u0417\u0430\u043A\u0440\u044B\u0442\u044C',
+    ref_title: '\uD83D\uDD12 \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0440\u0435\u0444\u0435\u0440\u0430\u043B',
+    ref_done_title: '\u2705 \u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043E!',
+    ref_subtitle: '\u041F\u0440\u0438\u0433\u043B\u0430\u0441\u0438\u0442\u0435 <b style="color:#fff">{n}</b> \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u0432 DVYS, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u044D\u0442\u043E\u0442 \u043F\u0440\u043E\u0433\u043D\u043E\u0437.',
+    ref_done_subtitle: '\u0412\u044B \u0434\u043E\u0441\u0442\u0438\u0433\u043B\u0438 \u0446\u0435\u043B\u0438 \u043F\u043E \u0440\u0435\u0444\u0435\u0440\u0430\u043B\u0430\u043C. \u0418\u0433\u0440\u0430 \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u0430.',
+    ref_progress: '\u0440\u0435\u0444\u0435\u0440\u0430\u043B\u043E\u0432',
+    ref_remaining: '\u0415\u0449\u0451 {n}',
+    ref_goal: '\u2713 \u0426\u0435\u043B\u044C \u0434\u043E\u0441\u0442\u0438\u0433\u043D\u0443\u0442\u0430!',
+    copy: '\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C',
+    copied: '\u0421\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u043E!',
+    how_title: '\u041A\u0430\u043A \u044D\u0442\u043E \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442?',
+    how_text: '\u041F\u043E\u0434\u0435\u043B\u0438\u0442\u0435\u0441\u044C \u0441\u0432\u043E\u0435\u0439 \u0441\u0441\u044B\u043B\u043A\u043E\u0439, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0431\u043E\u043D\u0443\u0441\u044B \u0438 \u044D\u043A\u0441\u043A\u043B\u044E\u0437\u0438\u0432\u043D\u044B\u0435 \u0438\u0433\u0440\u044B. \u0412\u0430\u0448\u0438 \u0440\u0435\u0444\u0435\u0440\u0430\u043B\u044B \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u043F\u0440\u0438 \u043A\u0430\u0436\u0434\u043E\u043C \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u0435.',
+    share_msg: 'Играй с DVYS AI. Получи лучшие 1win casino прогнозы!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0434\u0435\u043F\u043E\u0437\u0438\u0442',
+    dep_done_title: '\u2705 \u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043E!',
+    dep_subtitle: '\u0412\u043D\u0435\u0441\u0438\u0442\u0435 \u0434\u0435\u043F\u043E\u0437\u0438\u0442 <b style="color:#fff">${n}</b>, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u044D\u0442\u043E\u0442 \u043F\u0440\u043E\u0433\u043D\u043E\u0437.',
+    dep_done_subtitle: '\u0412\u044B \u0434\u043E\u0441\u0442\u0438\u0433\u043B\u0438 \u043F\u043E\u0440\u043E\u0433\u0430 \u0434\u0435\u043F\u043E\u0437\u0438\u0442\u0430. \u0418\u0433\u0440\u0430 \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u0430.',
+    dep_remaining_label: '\u041E\u0441\u0442\u0430\u0442\u043E\u043A',
+    dep_needed_label: '\u041D\u0435\u043E\u0431\u0445\u043E\u0434\u0438\u043C\u044B\u0439 \u0434\u0435\u043F\u043E\u0437\u0438\u0442',
+    dep_for_unlock: '\u0412\u043D\u0435\u0441\u0438\u0442\u0435 \u044D\u0442\u043E\u0442 \u0434\u0435\u043F\u043E\u0437\u0438\u0442 \u0434\u043B\u044F \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u043A\u0438',
+    dep_min_text: '\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430 \u0434\u043B\u044F \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u043A\u0438',
+    gen_title: '\u0418\u0433\u0440\u0430 \u0437\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u0430',
+    gen_text: '\u042D\u0442\u0430 \u0438\u0433\u0440\u0430 \u043F\u043E\u043A\u0430 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430. \u0412\u0435\u0440\u043D\u0438\u0442\u0435\u0441\u044C \u043F\u043E\u0437\u0436\u0435.'
+  },
+  pt: {
+    header_sub: '1win Prediction',
+    hero_title: 'DVYS Predictions',
+    loading: 'Carregando jogos...',
+    no_games: 'Nenhum jogo disponivel.',
+    error_load: 'Erro de carregamento. Tente novamente.',
+    hero_games: 'jogo',
+    hero_games_pl: 'jogos',
+    hero_after: 'Previsao IA em tempo real',
+    locked: 'Bloqueado',
+    play: 'Jogar',
+    footer: 'All rights reserved DVYS',
+    bonus_text: '+500% BONUS',
+    info_menu_title: 'Informacoes',
+    info_btn_platform: 'Plataforma',
+    info_btn_unlock: 'Desbloquear jogos',
+    info_btn_promo: 'Codigo promocional',
+    info_platform_title: 'A Plataforma',
+    info_platform_text: 'DVYS IA e uma plataforma de previsoes de jogos de casino em tempo real alimentada por algoritmos inteligentes que analisam os dados antes e durante cada rodada.',
+    info_unlock_title: 'Desbloquear jogos',
+    info_unlock_text: 'Alguns jogos estao bloqueados e requerem acoes especificas para desbloquear. Existem dois tipos de condicoes: <b>indicacao</b> (convidar pessoas para o bot) e <b>deposito</b> (acumular um valor de deposito para acessar as previsoes).',
+    info_promo_title: 'Codigo promocional',
+    info_promo_text: 'Use o codigo promocional <b>DVYS</b> ao se registrar para aproveitar acesso facil a depositos e saques, alem de um bonus de 500% no primeiro deposito.',
+    info_btn_stats: 'Estatisticas',
+    info_stats_title: 'Estatisticas',
+    info_stats_text: 'Veja o desempenho diario da plataforma DVYS. Acompanhe a evolucao dos ganhos, numero de jogadores e os jogos mais bem sucedidos.',
+    stats_view_btn: 'Ver estatisticas',
+    close: 'Fechar',
+    ref_title: '\uD83D\uDD12 Indicacao necessaria',
+    ref_done_title: '\u2705 Desbloqueado!',
+    ref_subtitle: 'Convide <b style="color:#fff">{n}</b> pessoa{pl} para se juntar ao DVYS para desbloquear esta previsao.',
+    ref_done_subtitle: 'Voce alcancou a meta de indicacoes. Este jogo esta desbloqueado.',
+    ref_progress: 'indicacoes',
+    ref_remaining: 'Faltam {n}',
+    ref_goal: '\u2713 Meta alcancada!',
+    copy: 'Copiar',
+    copied: 'Copiado!',
+    how_title: 'Como funciona?',
+    how_text: 'Compartilhe seu link para desbloquear bonus e jogos exclusivos. Suas indicacoes sao contadas automaticamente a cada progresso.',
+    share_msg: 'Jogue com DVYS IA. Obtenha as melhores previsoes casino 1win!\nAviator, Lucky Jet, Crash, Rocket queen...',
+
+    dep_title: '\uD83D\uDCB0 Deposito necessario',
+    dep_done_title: '\u2705 Desbloqueado!',
+    dep_subtitle: 'Faca um deposito de <b style="color:#fff">${n}</b> para desbloquear esta previsao.',
+    dep_done_subtitle: 'Voce alcancou o limite de deposito. Este jogo esta desbloqueado.',
+    dep_remaining_label: 'Valor restante',
+    dep_needed_label: 'Deposito a fazer',
+    dep_for_unlock: 'Faca este deposito para desbloquear',
+    dep_min_text: 'Valor minimo para desbloquear este jogo',
+    gen_title: 'Jogo bloqueado',
+    gen_text: 'Este jogo ainda nao esta disponivel. Volte mais tarde.'
+  }
+};
+
+// Valid languages
+var VALID_LANGS = ['fr','en','hi','uz','es','az','tr','ar','ru','pt'];
+
+function getLang() {
+  var params = new URLSearchParams(window.location.search);
+  var lang = params.get('lang') || '';
+  if (VALID_LANGS.indexOf(lang) === -1) {
+    // Try stored language
+    try {
+      lang = sessionStorage.getItem('dyvs_lang') || localStorage.getItem('dyvs_lang') || 'fr';
+    } catch(e) { lang = 'fr'; }
+  }
+  if (VALID_LANGS.indexOf(lang) === -1) lang = 'fr';
+  return lang;
+}
+
+function t(key) {
+  var l = I18N[currentLang] || I18N.fr;
+  return l[key] || I18N.fr[key] || key;
+}
+
+function applyTranslations() {
+  // RTL for Arabic
+  if (currentLang === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', currentLang);
+  }
+
+  // Static text elements
+  var els = document.querySelectorAll('[data-i18n]');
+  for (var i = 0; i < els.length; i++) {
+    var key = els[i].getAttribute('data-i18n');
+    els[i].textContent = t(key);
+  }
+
+  // Hero title
+  var heroTitle = document.querySelector('.dvys-hero h1');
+  if (heroTitle) heroTitle.textContent = t('hero_title');
+
+  // Info modal - panel texts (HTML content)
+  document.getElementById('infoPlatformText').innerHTML = t('info_platform_text');
+  document.getElementById('infoUnlockText').innerHTML = t('info_unlock_text');
+  document.getElementById('infoPromoText').innerHTML = t('info_promo_text');
+  document.getElementById('infoStatsText').innerHTML = t('info_stats_text');
+
+  // Stats link with current language
+  var statsLink = document.getElementById('statsLink');
+  if (statsLink) statsLink.href = '/stats?lang=' + currentLang;
+}
+
+// ─── USER ID (from URL params) ───
+function getUserId() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('user_id')) return parseInt(params.get('user_id'));
+  if (params.get('uid')) return parseInt(params.get('uid'));
+  try {
+    var tgId = sessionStorage.getItem('dyvs_telegram_id') || localStorage.getItem('dyvs_telegram_id');
+    if (tgId) return parseInt(tgId);
+    var savedId = localStorage.getItem('dyvs_win_id');
+    if (savedId) return parseInt(savedId);
+  } catch(e) {}
+  return 0;
+}
+
+// ─── LOAD GAMES ───
+async function loadGames() {
+  var userId = getUserId();
+  var url = '/api/games?action=public&_t=' + Date.now();
+  if (userId) url += '&user_id=' + userId;
+
+  try {
+    var res = await fetch(url, { cache: 'no-store' });
+    var data = await res.json();
+    document.getElementById('loadingGames').style.display = 'none';
+
+    if (!data.success || !data.games || data.games.length === 0) {
+      document.getElementById('gamesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--dvys-text-muted);font-size:0.9rem">' + escHtml(t('no_games')) + '</div>';
+      document.getElementById('gamesGrid').style.display = 'grid';
+      return;
+    }
+
+    var games = data.games;
+    var gWord = games.length > 1 ? t('hero_games_pl') : t('hero_games');
+    document.getElementById('heroSubtitle').textContent = games.length + ' ' + gWord + ' \u00B7 ' + t('hero_after');
+    renderGames(games);
+    document.getElementById('gamesGrid').style.display = 'grid';
+  } catch(e) {
+    console.error('Load games error:', e);
+    document.getElementById('loadingGames').innerHTML = '<div style="color:var(--dvys-red);font-size:0.85rem">' + escHtml(t('error_load')) + '</div>';
+  }
+}
+
+function renderGames(games) {
+  var grid = document.getElementById('gamesGrid');
+  var html = '';
+  games.forEach(function(g, i) {
+    var isLocked = g.lock_status === 'locked';
+    var delay = i * 60;
+    var cardClass = 'dvys-card' + (isLocked ? ' locked' : '');
+    var lockOverlay = '';
+
+    if (isLocked) {
+      lockOverlay = '<div class="dvys-lock-overlay">' +
+        '<div class="dvys-lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>' +
+        '<span class="dvys-lock-text">' + escHtml(t('locked')) + '</span>' +
+      '</div>';
+    }
+
+    var clickHandler = isLocked ? 'onclick="showLockModal(' + g.id + ')"' : 'onclick="openGame(\'' + escHtml(g.game_url) + '\')"';
+    var badgeText = isLocked ? t('locked') : t('play');
+    var badgeStyle = isLocked ? ' style="background:linear-gradient(135deg,#555,#777);color:#ccc"' : '';
+
+    html += '<div class="' + cardClass + '" style="animation-delay:' + delay + 'ms" ' + clickHandler + '>' +
+      '<div class="dvys-card-img">' +
+        '<img src="' + escHtml(g.image_url) + '" alt="' + escHtml(g.name) + '" loading="lazy" onerror="this.src=\'/identite_visuel.jpg\'">' +
+        '<div class="dvys-card-overlay"></div>' +
+        lockOverlay +
+      '</div>' +
+      '<div class="dvys-card-body">' +
+        '<span class="dvys-card-name">' + escHtml(g.name) + '</span>' +
+        '<span class="dvys-card-badge"' + badgeStyle + '>' + badgeText + '</span>' +
+      '</div>' +
+    '</div>';
+  });
+  grid.innerHTML = html;
+
+  // Store games data for lock modal
+  window._gamesData = games;
+}
+
+function openGame(url) {
+  window.location.href = url;
+}
+
+// ─── LOCK MODAL (fixed: uses unlock_type as fallback) ───
+function showLockModal(gameId) {
+  var game = null;
+  var games = window._gamesData || [];
+  for (var i = 0; i < games.length; i++) {
+    if (games[i].id === gameId) { game = games[i]; break; }
+  }
+  if (!game) return;
+
+  var tasks = game.tasks || [];
+  var progress = game.progress || {};
+  var html = '';
+  var isReferralLock = false;
+  var isDepositLock = false;
+
+  // Check tasks array first
+  for (var ti = 0; ti < tasks.length; ti++) {
+    if (tasks[ti].task_type === 'referrals') isReferralLock = true;
+    if (tasks[ti].task_type === 'deposit_amount') isDepositLock = true;
+  }
+
+  // FALLBACK: If tasks is empty, check unlock_type from API
+  if (!isReferralLock && !isDepositLock) {
+    var ut = (game.unlock_type || '').toLowerCase();
+    if (ut === 'referral' || ut === 'referrals') isReferralLock = true;
+    else if (ut === 'deposit') isDepositLock = true;
+  }
+
+  if (isReferralLock) {
+    // ─── REFERRAL LOCK MODAL ───
+    var p = progress.referrals || {};
+    var current = p.current || 0;
+    var required = p.required || game.unlock_value || 1;
+    var remaining = Math.max(0, required - current);
+    var referralLink = p.referral_link || '';
+    var isMet = current >= required;
+    var pct = required > 0 ? Math.min(100, (current / required) * 100) : 0;
+    var barClass = isMet ? 'done' : 'ref';
+    var pl = required > 1 ? 's' : '';
+    var shareMsg = t('share_msg');
+
+    html = '<h2>' + (isMet ? t('ref_done_title') : t('ref_title')) + '</h2>' +
+      '<div class="game-name">' + escHtml(game.name) + '</div>';
+
+    if (isMet) {
+      html += '<div class="game-subtitle">' + t('ref_done_subtitle') + '</div>';
+    } else {
+      html += '<div class="game-subtitle">' + t('ref_subtitle').replace('{n}', required).replace('{pl}', pl) + '</div>';
+    }
+
+    // Progress bar
+    html += '<div style="margin:16px 0 6px">' +
+      '<div class="dvys-task-progress" style="height:8px;margin-bottom:8px"><div class="dvys-task-progress-bar ' + barClass + '" style="width:' + pct + '%"></div></div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center">' +
+        '<div class="dvys-task-detail ' + (isMet ? 'dvys-task-done' : '') + '" style="font-size:0.85rem">' +
+          (isMet ? t('ref_goal') : '<b>' + current + ' / ' + required + '</b> ' + t('ref_progress')) +
+        '</div>' +
+        (remaining > 0 ? '<div style="font-size:0.8rem;font-weight:800;color:var(--dvys-accent)">' + t('ref_remaining').replace('{n}', remaining) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+
+    if (!isMet && referralLink) {
+      // CTA text + referral link - easy copy for sharing anywhere
+      var fullCTA = shareMsg + '\n' + referralLink;
+      var safeFullCTA = fullCTA.replace(/'/g, "\\'").replace(/\n/g, '\\n');
+      html += '<div class="dvys-cta-box" id="ctaBox">' +
+        '<div class="dvys-cta-text" id="ctaText">' + escHtml(shareMsg) + '<br><span class="cta-link">' + escHtml(referralLink) + '</span></div>' +
+        '<button class="dvys-copy-btn" onclick="copyCTA(this, \'' + safeFullCTA + '\')" style="align-self:center">' + t('copy') + '</button>' +
+      '</div>';
+
+      // How it works - simplified
+      html += '<div class="dvys-info-box">' +
+        '<h4>' + t('how_title') + '</h4>' +
+        '<div style="font-size:0.78rem;color:var(--dvys-text-muted);line-height:1.6">' + t('how_text') + '</div>' +
+      '</div>';
+    }
+
+    html += '<button class="dvys-lock-modal-close" onclick="closeLockModal()">' + t('close') + '</button>';
+
+  } else if (isDepositLock) {
+    // ─── DEPOSIT LOCK MODAL ───
+    var p2 = progress.deposit_amount || {};
+    var current2 = parseFloat(p2.current || 0);
+    var required2 = parseFloat(p2.required || game.unlock_value || 0);
+    var remaining2 = Math.max(0, required2 - current2);
+    var isMet2 = current2 >= required2;
+    var pct2 = required2 > 0 ? Math.min(100, (current2 / required2) * 100) : 0;
+    var barClass2 = isMet2 ? 'done' : 'dep';
+
+    html = '<h2>' + (isMet2 ? t('dep_done_title') : t('dep_title')) + '</h2>' +
+      '<div class="game-name">' + escHtml(game.name) + '</div>';
+
+    if (isMet2) {
+      html += '<div class="game-subtitle">' + t('dep_done_subtitle') + '</div>';
+    } else {
+      html += '<div class="game-subtitle">' + t('dep_subtitle').replace('${n}', '$' + required2.toFixed(2)) + '</div>';
+    }
+
+    // Progress bar
+    html += '<div style="margin:16px 0 6px">' +
+      '<div class="dvys-task-progress" style="height:8px;margin-bottom:8px"><div class="dvys-task-progress-bar ' + barClass2 + '" style="width:' + pct2 + '%"></div></div>' +
+      '<div class="dvys-task-detail ' + (isMet2 ? 'dvys-task-done' : '') + '" style="font-size:0.85rem">' +
+        (isMet2 ? '\u2713' : '<b>$' + current2.toFixed(2) + '</b> / $' + required2.toFixed(2)) +
+      '</div>' +
+    '</div>';
+
+    if (!isMet2 && remaining2 > 0) {
+      html += '<div class="dvys-deposit-info remaining">' +
+        '<div style="font-size:0.72rem;color:var(--dvys-orange);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">' + t('dep_remaining_label') + '</div>' +
+        '<div style="font-size:1.4rem;font-weight:900;color:#fff">$' + remaining2.toFixed(2) + '</div>' +
+        '<div style="font-size:0.72rem;color:var(--dvys-text-muted);margin-top:4px">' + t('dep_for_unlock') + '</div>' +
+      '</div>';
+    } else if (!isMet2 && current2 === 0) {
+      html += '<div class="dvys-deposit-info needed">' +
+        '<div style="font-size:0.72rem;color:var(--dvys-accent);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">' + t('dep_needed_label') + '</div>' +
+        '<div style="font-size:1.4rem;font-weight:900;color:#fff">$' + required2.toFixed(2) + '</div>' +
+        '<div style="font-size:0.72rem;color:var(--dvys-text-muted);margin-top:4px">' + t('dep_min_text') + '</div>' +
+      '</div>';
+    }
+
+    html += '<button class="dvys-lock-modal-close" onclick="closeLockModal()">' + t('close') + '</button>';
+
+  } else {
+    // ─── GENERIC LOCK MODAL ───
+    html = '<h2>' + t('gen_title') + '</h2>' +
+      '<div class="game-name">' + escHtml(game.name) + '</div>' +
+      '<div class="game-subtitle">' + t('gen_text') + '</div>' +
+      '<button class="dvys-lock-modal-close" onclick="closeLockModal()">' + t('close') + '</button>';
+  }
+
+  document.getElementById('lockModalContent').innerHTML = html;
+  document.getElementById('lockModal').classList.add('show');
+}
+
+function closeLockModal() {
+  document.getElementById('lockModal').classList.remove('show');
+}
+
+function copyReferral(btn, link) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(link).then(function() {
+      btn.textContent = t('copied');
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = t('copy');
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(function() {
+      fallbackCopy(btn, link);
+    });
+  } else {
+    fallbackCopy(btn, link);
+  }
+}
+
+function fallbackCopy(btn, link) {
+  var ta = document.createElement('textarea');
+  ta.value = link;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = t('copied');
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = t('copy');
+      btn.classList.remove('copied');
+    }, 2000);
+  } catch(e) {
+    btn.textContent = 'Erreur';
+    setTimeout(function() { btn.textContent = t('copy'); }, 1500);
+  }
+  document.body.removeChild(ta);
+}
+
+function escHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function escAttr(str) {
+  return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// ─── COPY CTA TEXT (global function) ───
+function copyCTA(btn, fullText) {
+  // Decode escaped newlines
+  var decoded = fullText.replace(/\\n/g, '\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(decoded).then(function() {
+      btn.textContent = t('copied');
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = t('copy'); btn.classList.remove('copied'); }, 2000);
+    }).catch(function() {
+      fallbackCopyCTA(btn, decoded);
+    });
+  } else {
+    fallbackCopyCTA(btn, decoded);
+  }
+}
+
+function fallbackCopyCTA(btn, text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = t('copied');
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = t('copy'); btn.classList.remove('copied'); }, 2000);
+  } catch(e) {
+    btn.textContent = 'Erreur';
+    setTimeout(function() { btn.textContent = t('copy'); }, 1500);
+  }
+  document.body.removeChild(ta);
+}
+
+// ─── INIT ───
+(function(){
+  // Initialize Telegram WebApp
+  try {
+    if (window.Telegram && Telegram.WebApp) {
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+      _tgWebApp = Telegram.WebApp;
+      console.log('[DVYS] Telegram WebApp initialized:', !!_tgWebApp);
+    } else {
+      console.warn('[DVYS] Telegram WebApp SDK not available');
+    }
+  } catch(e) {
+    console.warn('[DVYS] Telegram WebApp init error:', e);
+  }
+
+  // Set language
+  currentLang = getLang();
+  try {
+    sessionStorage.setItem('dyvs_lang', currentLang);
+    localStorage.setItem('dyvs_lang', currentLang);
+  } catch(e) {}
+
+  // Apply translations
+  applyTranslations();
+
+  // Generate floating coins
+  var container = document.getElementById('coins');
+  for(var i = 0; i < 18; i++){
+    var coin = document.createElement('div');
+    coin.className = 'coin-particle';
+    coin.textContent = '\uD83E\uDE99';
+    coin.style.left = Math.random()*100 + '%';
+    coin.style.animationDuration = (12 + Math.random()*18) + 's';
+    coin.style.animationDelay = (Math.random()*20) + 's';
+    coin.style.fontSize = (12 + Math.random()*12) + 'px';
+    container.appendChild(coin);
+  }
+
+  // Load games from API
+  loadGames();
+})();
+
+function toggleModal(){
+  var modal = document.getElementById('infoModal');
+  if (modal.classList.contains('show')) {
+    modal.classList.remove('show');
+    // Reset panels
+    var panels = document.querySelectorAll('.dvys-info-panel');
+    for (var i = 0; i < panels.length; i++) panels[i].classList.remove('show');
+    var btns = document.querySelectorAll('.dvys-info-btn-item');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  } else {
+    modal.classList.add('show');
+  }
+}
+
+function toggleInfoPanel(type) {
+  var panels = {
+    'platform': 'infoPanelPlatform',
+    'unlock': 'infoPanelUnlock',
+    'promo': 'infoPanelPromo',
+    'stats': 'infoPanelStats'
+  };
+  var panel = document.getElementById(panels[type]);
+  var btns = document.querySelectorAll('.dvys-info-btn-item');
+
+  // Close all panels first
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  var allPanels = document.querySelectorAll('.dvys-info-panel');
+  for (var i = 0; i < allPanels.length; i++) allPanels[i].classList.remove('show');
+
+  // Toggle the clicked one
+  if (panel) {
+    panel.classList.toggle('show');
+    // Activate the corresponding button
+    var idx = type === 'platform' ? 0 : type === 'unlock' ? 1 : type === 'promo' ? 2 : 3;
+    btns[idx].classList.add('active');
+  }
+}
+</script>
+
+<script src="protect.js"></script>
+</body>
+</html>

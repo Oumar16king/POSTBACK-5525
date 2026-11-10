@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Astronaut - DVYS</title>
+<style>
+/* ZOOM BLOCK - ULTRA */
+html,body{touch-action:pan-x pan-y!important;-ms-touch-action:pan-x pan-y!important;overscroll-behavior:none}
+
+/* ============================================
+   DVYS DESIGN SYSTEM - iOS Glassmorphism
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --dyvs-bg: #000a14;
+  --dyvs-bg2: #001020;
+  --dyvs-cyan: #00c8ff;
+  --dyvs-cyan-dark: #0099cc;
+  --dyvs-cyan-light: #66e0ff;
+  --dyvs-glass: rgba(0,200,255,0.08);
+  --dyvs-glass-light: rgba(0,200,255,0.15);
+  --dyvs-glass-border: rgba(0,200,255,0.12);
+  --dyvs-text: #ffffff;
+  --dyvs-text-muted: #7b8da4;
+  --dyvs-green: #00e676;
+  --dyvs-red: #ff5252;
+  --dyvs-blue: #448aff;
+  --dyvs-radius: 18px;
+  --dyvs-radius-sm: 12px;
+  --dyvs-radius-lg: 24px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body.euro54-body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(145deg, #000a14 0%, #001020 40%, #000e1a 70%, #000a14 100%);
+  color: var(--dyvs-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body.euro54-body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 20%, rgba(0,200,255,0.04) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(0,200,255,0.03) 0%, transparent 50%);
+  animation: e54-ambientDrift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes e54-ambientDrift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(30px, -20px) rotate(3deg); }
+}
+
+/* HEADER */
+.e54-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(0,10,20,0.75);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: e54-slideDown 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes e54-slideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.e54-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--dyvs-cyan-light), var(--dyvs-cyan), var(--dyvs-cyan-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  text-shadow: none;
+  filter: drop-shadow(0 1px 2px rgba(0,200,255,0.3));
+}
+
+.e54-logo-sub {
+  font-size: 0.65rem;
+  color: var(--dyvs-text-muted);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+.e54-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  animation: e54-pulse 2s ease-in-out infinite;
+}
+
+.e54-status-dot.live { background: var(--dyvs-green); box-shadow: 0 0 8px var(--dyvs-green); }
+.e54-status-dot.wait { background: var(--dyvs-cyan); box-shadow: 0 0 8px var(--dyvs-cyan); }
+.e54-status-dot.error { background: var(--dyvs-red); box-shadow: 0 0 8px var(--dyvs-red); }
+
+@keyframes e54-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* MAIN CONTAINER */
+.e54-main {
+  position: relative;
+  z-index: 1;
+  padding: 80px 16px 24px;
+  max-width: 500px;
+  margin: 0 auto;
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.15s both;
+}
+
+@keyframes e54-fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* GAME TITLE */
+.e54-game-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dyvs-text);
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* IFRAME WRAPPER */
+.e54-iframe-wrap {
+  width: 100%;
+  height: 320px;
+  border-radius: var(--dyvs-radius);
+  overflow: hidden;
+  position: relative;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.25s both;
+}
+
+.e54-iframe-wrap iframe {
+  width: 100%;
+  height: 650px;
+  border: none;
+  position: relative;
+  top: -40px;
+  pointer-events: auto;
+}
+
+.e54-iframe-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(10,22,40,0.6) 0%, transparent 15%, transparent 85%, rgba(10,22,40,0.6) 100%);
+  pointer-events: none;
+  z-index: 2;
+  border-radius: var(--dyvs-radius);
+}
+
+/* PREDICTION CARD */
+.e54-prediction {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: var(--dyvs-radius);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  background: linear-gradient(135deg, rgba(0,200,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(0,200,255,0.15);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.35s both;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 0 40px rgba(0,200,255,0.05);
+}
+
+.e54-prediction::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(0,200,255,0.05) 50%, transparent 60%);
+  animation: e54-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes e54-shimmer {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+}
+
+.e54-prediction-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--dyvs-cyan);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.e54-prediction-value {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--dyvs-cyan-light), var(--dyvs-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.e54-prediction-value.animate {
+  animation: e54-springBounce 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes e54-springBounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.15); }
+  80% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.e54-prediction-state {
+  font-size: 0.75rem;
+  color: var(--dyvs-text-muted);
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+/* BUTTONS */
+.e54-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000a14;
+  background: linear-gradient(135deg, var(--dyvs-cyan-light), var(--dyvs-cyan), var(--dyvs-cyan-dark));
+  background-size: 200% 200%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 4px 16px rgba(0,200,255,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.45s both;
+  margin-top: 20px;
+}
+
+.e54-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(0,200,255,0.15);
+}
+
+.e54-btn:hover {
+  background-position: 100% 0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,200,255,0.3);
+}
+
+.e54-btn-back {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  color: var(--dyvs-text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
+}
+
+.e54-btn-back:active { transform: scale(0.97); }
+.e54-btn-back:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* MINES BOARD */
+.e54-mines-container {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--dyvs-radius-lg);
+  padding: 20px;
+  animation: e54-fadeInUp 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.2s both;
+}
+
+.e54-mines-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.e54-mines-controls button {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,200,255,0.3);
+  background: rgba(0,200,255,0.08);
+  color: var(--dyvs-cyan);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.e54-mines-controls button:active { transform: scale(0.9); }
+
+.e54-mines-controls span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dyvs-text-muted);
+}
+
+.e54-mines-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.e54-mines-tile {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.e54-mines-tile:hover {
+  transform: scale(1.06);
+  background: rgba(0,200,255,0.1);
+  border-color: rgba(0,200,255,0.2);
+  box-shadow: 0 0 16px rgba(0,200,255,0.1);
+}
+
+.e54-mines-tile.revealed {
+  background: linear-gradient(145deg, rgba(0,230,118,0.2), rgba(0,230,118,0.05));
+  border-color: rgba(0,230,118,0.3);
+  animation: e54-tileReveal 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.e54-mines-tile.mine {
+  background: linear-gradient(145deg, rgba(255,82,82,0.25), rgba(255,82,82,0.08));
+  border-color: rgba(255,82,82,0.3);
+}
+
+@keyframes e54-tileReveal {
+  0% { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+  70% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* MULTIPLIER BAR */
+.e54-mult-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-radius: var(--dyvs-radius-sm);
+  background: rgba(0,200,255,0.06);
+  border: 1px solid rgba(0,200,255,0.1);
+  margin-bottom: 16px;
+}
+
+.e54-mult-bar span {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--dyvs-cyan);
+}
+
+/* FOOTER */
+.e54-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.e54-badge {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  background: rgba(0,200,255,0.1);
+  border: 1px solid rgba(0,200,255,0.15);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--dyvs-cyan);
+  letter-spacing: 1.5px;
+  z-index: 100;
+  animation: e54-badgeFloat 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes e54-badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* RESPONSIVE */
+@media (max-width: 400px) {
+  .e54-main { padding: 70px 12px 20px; }
+  .e54-prediction-value { font-size: 2.2rem; }
+  .e54-iframe-wrap { height: 280px; }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ===== DVYS FLOATING COINS ===== */
+.dyvs-coins{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.dyvs-coin{position:absolute;font-size:20px;opacity:0;animation:dyvs-coinFloat linear infinite}
+@keyframes dyvs-coinFloat{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+  10%{opacity:.12}
+  90%{opacity:.12}
+  100%{transform:translateY(-10vh) rotate(720deg);opacity:0}
+}
+.dyvs-coin:nth-child(1){left:5%;animation-duration:12s;animation-delay:0s;font-size:16px}
+.dyvs-coin:nth-child(2){left:15%;animation-duration:15s;animation-delay:2s;font-size:22px}
+.dyvs-coin:nth-child(3){left:25%;animation-duration:11s;animation-delay:4s;font-size:14px}
+.dyvs-coin:nth-child(4){left:40%;animation-duration:14s;animation-delay:1s;font-size:18px}
+.dyvs-coin:nth-child(5){left:55%;animation-duration:13s;animation-delay:3s;font-size:20px}
+.dyvs-coin:nth-child(6){left:70%;animation-duration:16s;animation-delay:5s;font-size:15px}
+.dyvs-coin:nth-child(7){left:85%;animation-duration:12s;animation-delay:2.5s;font-size:24px}
+.dyvs-coin:nth-child(8){left:95%;animation-duration:14s;animation-delay:0.5s;font-size:17px}
+
+</style>
+</head>
+<body class="euro54-body">
+<div class="dyvs-coins">
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+  <div class="dyvs-coin">&#x1FA99;</div>
+</div>
+
+
+<!-- HEADER -->
+<div class="e54-header">
+  <div style="display:flex;align-items:center;">
+    <span class="e54-logo">DVYS</span>
+    <span class="e54-logo-sub">Predictions</span>
+  </div>
+  <div style="display:flex;align-items:center;">
+    <span class="e54-status-dot wait" id="statusDot"></span>
+    <span id="statusText" style="font-size:0.7rem;color:var(--dyvs-text-muted);">Chargement...</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="e54-main">
+  <div class="e54-game-title">Astronaut</div>
+  
+  <div class="e54-iframe-wrap">
+    <iframe id="myIframe" src="https://100hp.app/astronaut_grm/vgs/?b=b6705c907a83ad9b76c1ba570bc28eab956e22df71dfca96fd5dc5d06f84cfaf33f4a72d51a600d23cd210d72b621c13b35fa9c8d288c8ae497773d27aed4445711cad084dfd8dbb51b45c8adf6a497ce1c304c39571fbf8c95d191526f234385e1e1818ecfe8fb588606790619e02bfcf5e700ac2acf2cf48a3ad4d99c89e2e44a43518f2856dd102774577fbe01d0034b3cd60ad0b57d63fca90b1b7e6f6d3b4b8785994759e909b28532e095fd60f7e209688763ba4ffb2.9f8bf20bd7133274cda5ed14d6aae856.077dee8d-c923-4c02-9bee-757573662e69&language=en&pid=1win&pik=01961b0c-84c8-7d20-a319-48c736b3b49d" scrolling="no"></iframe>
+    <div class="e54-iframe-overlay"></div>
+  </div>
+  
+  <div class="e54-prediction">
+    <div class="e54-prediction-label">Prochaine Prédiction</div>
+    <div class="e54-prediction-value" id="multiplier">x...</div>
+    <div class="e54-prediction-state" id="predState">Analyse en cours...</div>
+  </div>
+  
+  <button class="e54-btn-back" onclick="window.history.back()">← Retour</button>
+  
+  <div class="e54-footer">DVYS</div>
+</div>
+
+<div class="e54-badge">DVYS</div>
+
+<script>
+
+const multiplierEl = document.getElementById('multiplier');
+const statusDot = document.getElementById('statusDot');
+const statusText = document.getElementById('statusText');
+const predState = document.getElementById('predState');
+
+function setStatus(state) {
+  statusDot.className = 'e54-status-dot ' + state;
+  if (state === 'live') statusText.textContent = 'En direct';
+  else if (state === 'wait') statusText.textContent = 'En attente';
+  else if (state === 'error') statusText.textContent = 'Erreur';
+  else statusText.textContent = 'Chargement...';
+}
+
+function showPrediction(val) {
+  multiplierEl.textContent = 'x' + val;
+  multiplierEl.classList.remove('animate');
+  void multiplierEl.offsetWidth;
+  multiplierEl.classList.add('animate');
+  predState.textContent = 'Prédiction active';
+  setStatus('live');
+}
+
+const apiURL = "https://crash-gateway-grm-cr.100hp.app/state";
+const historyURL = "https://crash-gateway-grm-cr.100hp.app/history";
+const headers = {
+  'customer-id': '077dee8d-c923-4c02-9bee-757573662e69',
+  'session-id': '908ae0ec-b269-492e-90af-3cec56f163bb',
+  'accept': 'application/json'
+};
+
+let historyData = [];
+
+function calcAvg(d, w) {
+  if (d.length < w) return d[d.length - 1] || 1.5;
+  return d.slice(-w).reduce((a, b) => a + b, 0) / w;
+}
+
+function calcEWMA(d, a = 0.3) {
+  if (!d.length) return 1.5;
+  let e = d[0];
+  for (let i = 1; i < d.length; i++) e = a * d[i] + (1 - a) * e;
+  return e;
+}
+
+function calcVol(d) {
+  if (d.length < 2) return 0;
+  const m = d.reduce((a, b) => a + b, 0) / d.length;
+  return Math.sqrt(d.reduce((s, v) => s + (v - m) ** 2, 0) / d.length);
+}
+
+function detectTrend(d, w = 10) {
+  if (d.length < w) return 0;
+  const r = d.slice(-w);
+  let inc = 0;
+  for (let i = 1; i < r.length; i++) if (r[i] > r[i-1]) inc++;
+  return (inc / (r.length - 1)) - 0.5;
+}
+
+function calcMomentum(d, p = 5) {
+  if (d.length < p + 1) return 0;
+  return (d[d.length-1] - d[d.length-p-1]) / d[d.length-p-1];
+}
+
+function ensemblePrediction(history) {
+  if (history.length < 5) return 1.2 + Math.random() * 1.3;
+  const vol = calcVol(history.slice(-20));
+  const alpha = Math.max(0.1, Math.min(0.5, vol / 2));
+  const ewma = calcEWMA(history, alpha);
+  const trend = calcAvg(history, 10) * (1 + detectTrend(history) * 0.2);
+  const mom = history[history.length-1] * (1 + calcMomentum(history) * 0.3);
+  const mean = history.reduce((a, b) => a + b, 0) / history.length;
+  const last = history[history.length - 1];
+  const meanRev = last + (mean - last) * 0.25;
+  let val = ewma * 0.35 + trend * 0.20 + mom * 0.20 + meanRev * 0.25;
+  return Math.max(1.01, Math.min(val, 8));
+}
+
+async function fetchPrediction() {
+  try {
+    const res = await fetch(historyURL, { headers });
+    const data = await res.json();
+    if (!Array.isArray(data) || !data.length) return "1.50";
+    const coef = data[0]?.coef ?? data[0]?.crash ?? data[0]?.value ?? data[0]?.topCoefficient;
+    if (!coef) return "1.50";
+    historyData.push(Number(coef));
+    const next = ensemblePrediction(historyData);
+    return next.toFixed(2);
+  } catch (e) {
+    console.error("Prediction error:", e);
+    return (1.2 + Math.random() * 1.5).toFixed(2);
+  }
+}
+
+function extractGameStage(d) {
+  // Try common nested paths
+  if (!d || typeof d !== 'object') return { stage: 'unknown', roundId: null, coef: null };
+  
+  const paths = [
+    d.currentState,
+    d.game?.state,
+    d.game?.gameState,
+    d.game?.status,
+    d.game?.stage,
+    d.state,
+    d.status,
+    d.gameState,
+    d.stage,
+    d.data?.game?.state,
+    d.data?.gameState,
+    d.data?.state,
+    d.data?.status,
+  ];
+  
+  let stage = null;
+  for (const p of paths) {
+    if (p === undefined || p === null) continue;
+    if (typeof p === 'string') { stage = p.toLowerCase(); break; }
+    if (typeof p === 'number') { stage = p === 1 ? 'started' : p === 2 ? 'finished' : 'waiting'; break; }
+    if (typeof p === 'boolean') { stage = p ? 'started' : 'waiting'; break; }
+  }
+  
+  const rid = d.roundConfig?.id ?? d.game?.id ?? d.game?.roundId ?? d.roundId ?? d.id ?? d.data?.game?.id ?? d.data?.roundId;
+  const coef = d.currentCoefficients?.[0] ?? d.stopCoefficients?.[0] ?? d.game?.coefficient ?? d.game?.crashPoint ?? d.game?.multiplier ?? d.coefficient;
+  
+  return { stage: stage || 'unknown', roundId: rid || null, coef: coef || null };
+}
+
+let lastStage = null;
+let lastRoundId = null;
+let predictedForRound = null;
+
+function classifyStage(stage) {
+  if (!stage) return 'unknown';
+  if (['started','running','flying','play','playing','live','in_game','inprogress','active','in-game'].includes(stage)) return 'running';
+  if (['crashed','crash','ended','finished','completed','gameover','game_over','dead','end'].includes(stage)) return 'crashed';
+  if (['waiting','betting','idle','ready','countdown','pending','prepare','preparing','new'].includes(stage)) return 'waiting';
+  return 'unknown';
+}
+
+async function poll() {
+  try {
+    const resp = await fetch(apiURL, { method: 'GET', headers });
+    if (!resp.ok) throw new Error('API ' + resp.status);
+    const data = await resp.json();
+    
+    const { stage, roundId, coef } = extractGameStage(data);
+    const classified = classifyStage(stage);
+    
+    // Detect round end (crash) by two methods:
+    // Method 1: State went from running to non-running (flying -> waiting/crashed)
+    const stateCrashed = lastStage === 'running' && classified !== 'running';
+    // Method 2: roundId changed while game was running (API skipped waiting state)
+    const roundSkipped = lastStage === 'running' && roundId && lastRoundId && roundId !== lastRoundId;
+    
+    if (stateCrashed || roundSkipped) {
+      // Round ended -> reset so we can predict for the next one
+      predictedForRound = null;
+      console.log('[poll] CRASH DETECTED (state=' + classified + ', round=' + roundId + ')');
+    }
+    
+    // Predict if no active prediction exists
+    if (!predictedForRound) {
+      setStatus('wait');
+      predState.textContent = 'Calcul en cours...';
+      const val = await fetchPrediction();
+      showPrediction(val);
+      predictedForRound = roundId || Date.now();
+      console.log('[poll] Prediction: x' + val + ' for round ' + predictedForRound);
+    } else {
+      // Already have a prediction -> just update status display
+      if (classified === 'running') {
+        setStatus('live');
+      } else {
+        setStatus('wait');
+      }
+    }
+    
+    lastStage = classified;
+    lastRoundId = roundId;
+    
+  } catch (e) {
+    setStatus('error');
+    statusText.textContent = 'Reconnexion...';
+    console.error('[poll] error:', e);
+  }
+  
+  setTimeout(poll, 500);
+}
+
+setStatus('wait');
+poll();
+</script>
+
+
+<script>
+/* ===== ZOOM BLOCK - ULTRA ===== */
+(function(){
+  var lt=0;
+  document.addEventListener('touchstart',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+  document.addEventListener('touchmove',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});
+  document.addEventListener('touchend',function(e){var n=Date.now();if(n-lt<=300)e.preventDefault();lt=n},{passive:false});
+  document.addEventListener('gesturestart',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('gesturechange',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('gestureend',function(e){e.preventDefault()},{passive:false});
+  document.addEventListener('wheel',function(e){if(e.ctrlKey||e.metaKey)e.preventDefault()},{passive:false});
+  document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&(e.key==='+'||e.key==='-'||e.key==='='||e.key==='0'))e.preventDefault()});
+  window.addEventListener('resize',function(){setTimeout(function(){var vp=document.querySelector('meta[name="viewport"]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')},100)});
+  setTimeout(function(){var vp=document.querySelector('meta[name="viewport"]');if(vp)vp.setAttribute('content','width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover')},500);
+})();
+</script>
+
+<script src="/protect.js"></script>
+</body>
+</html>
